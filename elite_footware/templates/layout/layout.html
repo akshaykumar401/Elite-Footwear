@@ -1,0 +1,81 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elite Footware | {% block title %}{% endblock title %}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="{% static 'styles/layout.css' %}" />
+    {% block styles %}{% endblock styles %}
+  </head>
+  <body>
+    {% comment %} NavBar {% endcomment %}
+    <nav class="site-nav">
+      <div class="logo">
+        <h1>Elite Footware</h1>
+      </div>
+      <ul class="nav-links" id="primary-navigation">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#" class="user-link" aria-label="User account">
+          <i class="fa-solid fa-user user-icon" aria-hidden="true"></i>
+        </a>
+
+        <a href="#" class="cart-link">
+          <i class="fa-solid fa-cart-shopping cart-icon" aria-hidden="true"></i>
+          <span class="cart-count">0</span>
+          <span class="sr-only">Cart</span>
+        </a>
+
+        {% comment %} Mobile nav list Toggling Button {% endcomment %}
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+        >
+          <i class="fa-solid fa-bars menu-icon" aria-hidden="true"></i>
+        </button>
+      </div>
+    </nav>
+
+    {% comment %} Main Content Area {% endcomment %}
+    <main>{% block content %}{% endblock content %}</main>
+
+    {% comment %} Footer {% endcomment %}
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h2>Elite Footware</h2>
+          <p>Step into comfort, style, and everyday confidence.</p>
+        </div>
+
+        <ul class="footer-links">
+          <li><a href="#">Shopping</a></li>
+          <li><a href="#">Return</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Teams</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <span class="copyright">© 2026 Elite Footware. All rights reserved.</span>
+    </footer>
+
+    <script src="{% static 'scripts/layout.js' %}"></script>
+    {% block scripts %}{% endblock scripts %}
+  </body>
+</html>

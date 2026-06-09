@@ -1,0 +1,229 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Poppins", sans-serif;
+}
+nav {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 0 20px;
+  background-color: #F1F1F1;
+  color: #000000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 70px;
+  z-index: 20;
+}
+.logo {
+  font-size: 16px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+.logo h1 {
+  font-size: clamp(20px, 3vw, 28px);
+  line-height: 1.1;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+}
+.nav-links li {
+  margin: 0;
+}
+.nav-links a {
+  background-color: #F1F1F1;
+  text-decoration: none;
+  color: #464747;
+  transition: color 0.3s ease;
+}
+.nav-links a:hover {
+  color: #D84200;
+}
+.nav-links a.active {
+  color: #D84200;
+  text-decoration: underline;
+  font-weight: 600;
+  text-underline-offset: 6px;
+}
+.user-link,
+.cart-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #1B1C1C;
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+.user-link:hover,
+.cart-link:hover {
+  color: #D84200;
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+.user-icon,
+.cart-icon {
+  font-size: 24px;
+}
+.cart-icon {
+  margin-right: 5px;
+}
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: #fff;
+  color: #333;
+  padding: 2px 5px;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 1;
+}
+.menu-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  color: #1B1C1C;
+  font-size: 24px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.site-footer {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 44px 20px 24px;
+}
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.footer-brand {
+  max-width: 340px;
+}
+.footer-brand h2 {
+  font-size: 28px;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.footer-brand p {
+  color: #d8d8d8;
+  line-height: 1.6;
+}
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  gap: 12px 32px;
+  list-style: none;
+}
+.footer-links a {
+  color: #d8d8d8;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.footer-links a:hover {
+  color: #D84200;
+}
+.copyright {
+  display: block;
+  max-width: 1180px;
+  margin: 34px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  color: #b8b8b8;
+  font-size: 14px;
+}
+@media (max-width: 768px) {
+  nav {
+    gap: 12px;
+    padding: 0 16px;
+  }
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    background-color: #ADABAA;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    transition: max-height 0.3s ease;
+    z-index: 10;
+  }
+  .nav-links.active {
+    max-height: 260px;
+  }
+  .nav-links li {
+    margin: 0;
+    border-top: 1px solid rgba(27, 28, 28, 0.15);
+  }
+  .nav-links a {
+    display: block;
+    padding: 14px 20px;
+  }
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .site-footer {
+    padding: 36px 16px 22px;
+  }
+  .footer-content {
+    flex-direction: column;
+    gap: 28px;
+  }
+  .footer-links {
+    width: 100%;
+  }
+}
+@media (max-width: 420px) {
+  nav {
+    padding: 0 12px;
+  }
+  .logo h1 {
+    font-size: 18px;
+  }
+  .footer-brand h2 {
+    font-size: 24px;
+  }
+  .footer-links {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .copyright {
+    margin-top: 28px;
+  }
+}

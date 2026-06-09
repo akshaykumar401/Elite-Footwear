@@ -1,0 +1,27 @@
+{% extends "layout/layout.html" %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'styles/index.css' %}" />
+{% endblock styles %}
+{% block content %}
+  <section class="home-hero">
+    <div class="hero-content">
+      <span class="hero-label">New season styles</span>
+      <h1>Step Into Your Perfect Pair</h1>
+      <p>
+        Explore comfortable, stylish footwear made for everyday walks, weekend plans,
+        and everything in between.
+      </p>
+      <div class="hero-actions">
+        <a href="#" class="primary-btn">Shop Now</a>
+        <a href="#" class="secondary-btn">View Collection</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <i class="fa-solid fa-shoe-prints"></i>
+    </div>
+  </section>
+{% endblock content %}
+{% block scripts %}{% endblock scripts %}
