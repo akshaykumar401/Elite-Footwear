@@ -22,10 +22,46 @@
         <h1>Elite Footware</h1>
       </div>
       <ul class="nav-links" id="primary-navigation">
-        <li><a href="#" class="active">Home</a></li>
-        <li><a href="#">Products</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Contact</a></li>
+        <li>
+          <a
+            href="{% url 'home' %}" 
+            {% if request.path == '/' %}
+              class="active"
+            {% endif %}
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="{% url 'product_page' %}"
+            {% if request.path == '/product/' %}
+              class="active"
+            {% endif %}
+          >
+            Products
+          </a>
+        </li>
+        <li>
+          <a 
+            href="{% url 'about_page' %}"
+            {% if request.path == '/about_us/' %}
+              class="active"
+            {% endif %}
+          >
+            About Us
+          </a>
+        </li>
+        <li>
+          <a 
+            href="{% url 'contact_page' %}"
+            {% if request.path == '/contact_us/' %}
+              class="active"
+            {% endif %}
+          >
+            Contact
+          </a>
+        </li>
       </ul>
       <div class="nav-actions">
         <a href="#" class="user-link" aria-label="User account">
