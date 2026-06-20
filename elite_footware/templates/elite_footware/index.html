@@ -1,6 +1,10 @@
-{% extends "layout/layout.html" %} {% load static %} {% block title %}Home{%endblock title %} {% block styles %}
-<link rel="stylesheet" href="{% static 'styles/index.css' %}" />
-{% endblock styles %} {% block content %}
+{% extends "layout/layout.html" %}
+{% load static %} 
+{% block title %} Home {% endblock title %} 
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'styles/index.css' %}" />
+{% endblock styles %} 
+{% block content %}
 <section id="new-arrives" aria-labelledby="new-arrivals-title">
   <div class="new-arrives-copy">
     <span class="section-kicker">Season 04 / Core Collection</span>

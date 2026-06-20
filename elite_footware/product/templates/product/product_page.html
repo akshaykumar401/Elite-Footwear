@@ -1,129 +1,183 @@
-{% extends "layout/layout.html" %}
-{% load static %}
+{% extends "layout/layout.html" %} 
+{% load static %} 
 {% block title %}Product{%endblock title %} 
 {% block styles %}
 <link rel="stylesheet" href="{% static 'styles/product_page.css' %}" />
 {% endblock styles %}
 {% block content %}
-  <section class="catalog" aria-label="New arrival products">
-    <div class="catalog-toolbar">
-      <div class="catalog-filter" aria-label="Product filters">
-        <span>Filter <i class="fa-solid fa-sliders" aria-hidden="true"></i></span>
-        <button type="button" class="is-active">All</button>
-        <button type="button">Running</button>
-        <button type="button">Lifestyle</button>
-        <button type="button">Studio</button>
+<section class="catalog" aria-label="New arrival products">
+  <div class="catalog-toolbar">
+    <button class="catalog-filter" aria-label="Product filters">
+      <span>Filter <i class="fa-solid fa-sliders" aria-hidden="true"></i></span>
+    </button>
+    <div class="catalog-count">
+      <span class="count-text">6 Products Found</span>
+    </div>
+  </div>
+
+  <div class="filter-drawer" id="filter-drawer">
+    <div class="filter-drawer__inner">
+      <div class="filter-column">
+        <h3>Category</h3>
+        <ul class="filter-list" data-filter-group="category">
+          <li><button type="button" class="filter-btn active" data-value="All">All Categories</button></li>
+          <li><button type="button" class="filter-btn" data-value="Running">Running</button></li>
+          <li><button type="button" class="filter-btn" data-value="Lifestyle">Lifestyle</button></li>
+          <li><button type="button" class="filter-btn" data-value="Studio">Studio</button></li>
+        </ul>
       </div>
-      <div class="catalog-count">
-        <span>12 Products Found</span>
+      <div class="filter-column">
+        <h3>Gender</h3>
+        <ul class="filter-list" data-filter-group="gender">
+          <li><button type="button" class="filter-btn active" data-value="All">All Genders</button></li>
+          <li><button type="button" class="filter-btn" data-value="Men">Men</button></li>
+          <li><button type="button" class="filter-btn" data-value="Women">Women</button></li>
+          <li><button type="button" class="filter-btn" data-value="Unisex">Unisex</button></li>
+        </ul>
+      </div>
+      <div class="filter-column">
+        <h3>Sort By</h3>
+        <ul class="filter-list" data-filter-group="sort">
+          <li><button type="button" class="filter-btn active" data-value="newest">Newest</button></li>
+          <li><button type="button" class="filter-btn" data-value="price-low-high">Price: Low to High</button></li>
+          <li><button type="button" class="filter-btn" data-value="price-high-low">Price: High to Low</button></li>
+        </ul>
       </div>
     </div>
+  </div>
 
-    <div class="product-grid">
-      <article class="product-card">
-        <a class="product-card__image" href="#" aria-label="View Kinetic V2">
-          <span class="product-badge">New</span>
-          <img src="{% static 'images/products/kinetic-v2.png' %}" alt="White Kinetic V2 running shoe" />
-        </a>
-        <div class="product-card__meta">
-          <div>
-            <h3>Kinetic V2</h3>
-            <p>Performance Running</p>
-          </div>
-          <strong>$280.00</strong>
+  <div class="product-grid">
+    <a href="#" class="product-card" data-category="Running" data-gender="Men" data-price="280.00" data-newest="6">
+      <div class="product-card__image" aria-label="View Kinetic V2">
+        <span class="product-badge">New</span>
+        <img
+          src="{% static 'images/products/kinetic-v2.png' %}"
+          alt="White Kinetic V2 running shoe"
+        />
+      </div>
+      <div class="product-card__meta">
+        <div>
+          <h3>Kinetic V2</h3>
+          <p>Performance Running</p>
         </div>
-      </article>
+        <strong>$280.00</strong>
+      </div>
+    </a>
 
-      <article class="product-card">
-        <a class="product-card__image" href="#" aria-label="View Architect Low">
-          <img src="{% static 'images/products/architect-low.png' %}" alt="Black Architect Low lifestyle shoe" />
-        </a>
-        <div class="product-card__meta">
-          <div>
-            <h3>Architect Low</h3>
-            <p>Urban Lifestyle</p>
-          </div>
-          <strong>$240.00</strong>
+    <a href="#" class="product-card" data-category="Lifestyle" data-gender="Men" data-price="240.00" data-newest="5">
+      <div class="product-card__image" aria-label="View Architect Low">
+        <img
+          src="{% static 'images/products/architect-low.png' %}"
+          alt="Black Architect Low lifestyle shoe"
+        />
+      </div>
+      <div class="product-card__meta">
+        <div>
+          <h3>Architect Low</h3>
+          <p>Urban Lifestyle</p>
         </div>
-      </article>
+        <strong>$240.00</strong>
+      </div>
+    </a>
 
-      <article class="product-card">
-        <a class="product-card__image" href="#" aria-label="View Void Elite">
-          <span class="product-badge">New</span>
-          <img src="{% static 'images/products/void-elite.png' %}" alt="Black Void Elite track shoe" />
-        </a>
-        <div class="product-card__meta">
-          <div>
-            <h3>Void Elite</h3>
-            <p>Elite Track</p>
-          </div>
-          <strong>$320.00</strong>
+    <a href="#" class="product-card" data-category="Running" data-gender="Women" data-price="320.00" data-newest="4">
+      <div class="product-card__image" aria-label="View Void Elite">
+        <span class="product-badge">New</span>
+        <img
+          src="{% static 'images/products/void-elite.png' %}"
+          alt="Black Void Elite track shoe"
+        />
+      </div>
+      <div class="product-card__meta">
+        <div>
+          <h3>Void Elite</h3>
+          <p>Elite Track</p>
         </div>
-      </article>
+        <strong>$320.00</strong>
+      </div>
+    </a>
 
-      <article class="product-card">
-        <a class="product-card__image" href="#" aria-label="View Struct Scape">
-          <img src="{% static 'images/products/struct-scape.png' %}" alt="Beige Struct Scape trail shoe" />
-        </a>
-        <div class="product-card__meta">
-          <div>
-            <h3>Struct Scape</h3>
-            <p>Trail & Terrain</p>
-          </div>
-          <strong>$265.00</strong>
+    <a href="#" class="product-card" data-category="Studio" data-gender="Unisex" data-price="265.00" data-newest="3">
+      <div class="product-card__image" aria-label="View Struct Scape">
+        <img
+          src="{% static 'images/products/struct-scape.png' %}"
+          alt="Beige Struct Scape trail shoe"
+        />
+      </div>
+      <div class="product-card__meta">
+        <div>
+          <h3>Struct Scape</h3>
+          <p>Trail & Terrain</p>
         </div>
-      </article>
+        <strong>$265.00</strong>
+      </div>
+    </a>
 
-      <article class="product-card">
-        <a class="product-card__image" href="#" aria-label="View Carbon Zero">
-          <span class="product-badge">Limited</span>
-          <img src="{% static 'images/products/carbon-zero.png' %}" alt="White Carbon Zero concept shoe" />
-        </a>
-        <div class="product-card__meta">
-          <div>
-            <h3>Carbon Zero</h3>
-            <p>Archive Concept</p>
-          </div>
-          <strong>$450.00</strong>
+    <a href="#" class="product-card" data-category="Lifestyle" data-gender="Women" data-price="450.00" data-newest="2">
+      <div class="product-card__image" aria-label="View Carbon Zero">
+        <span class="product-badge">Limited</span>
+        <img
+          src="{% static 'images/products/carbon-zero.png' %}"
+          alt="White Carbon Zero concept shoe"
+        />
+      </div>
+      <div class="product-card__meta">
+        <div>
+          <h3>Carbon Zero</h3>
+          <p>Archive Concept</p>
         </div>
-      </article>
+        <strong>$450.00</strong>
+      </div>
+    </a>
 
-      <article class="product-card">
-        <a class="product-card__image" href="#" aria-label="View Orange Element">
-          <img src="{% static 'images/products/orange-element.png' %}" alt="Orange Element training shoe" />
-        </a>
-        <div class="product-card__meta">
-          <div>
-            <h3>Orange Element</h3>
-            <p>Training</p>
-          </div>
-          <strong>$190.00</strong>
+    <a href="#" class="product-card" data-category="Studio" data-gender="Unisex" data-price="190.00" data-newest="1">
+      <div class="product-card__image" aria-label="View Orange Element">
+        <img
+          src="{% static 'images/products/orange-element.png' %}"
+          alt="Orange Element training shoe"
+        />
+      </div>
+      <div class="product-card__meta">
+        <div>
+          <h3>Orange Element</h3>
+          <p>Training</p>
         </div>
-      </article>
-    </div>
+        <strong>$190.00</strong>
+      </div>
+    </a>
+  </div>
 
-    <div class="catalog-more">
-      <button type="button">Load More Arrivals</button>
-      <span>Showing 6 of 12 Products</span>
-    </div>
-  </section>
+  <div class="catalog-more">
+    <button type="button">Load More Arrivals</button>
+    <span class="count-showing">Showing 6 of 6 Products</span>
+  </div>
+</section>
 
-  <section class="product-subscribe" aria-label="Subscribe for new arrivals">
-    <div class="product-subscribe__copy">
-      <h2>Structural Intelligence</h2>
-      <p>
-        Subscribe to receive early access to limited drops, technical analysis
-        of new silhouettes, and exclusive community events.
-      </p>
-      <form class="subscribe-form" action="#" method="post">
-        <label class="sr-only" for="product-email">Email address</label>
-        <input id="product-email" name="email" type="email" placeholder="Email address" />
-        <button type="submit">Join</button>
-      </form>
-    </div>
-    <div class="product-subscribe__image">
-      <img src="{% static 'images/products/void-elite.png' %}" alt="Dark technical sneaker in a studio spotlight" />
-    </div>
-  </section>
-{% endblock content %}
-{% block scripts %}{% endblock scripts %}
+<section class="product-subscribe" aria-label="Subscribe for new arrivals">
+  <div class="product-subscribe__copy">
+    <h2>Structural Intelligence</h2>
+    <p>
+      Subscribe to receive early access to limited drops, technical analysis of
+      new silhouettes, and exclusive community events.
+    </p>
+    <form class="subscribe-form" action="#" method="post">
+      <label class="sr-only" for="product-email">Email address</label>
+      <input
+        id="product-email"
+        name="email"
+        type="email"
+        placeholder="Email address"
+      />
+      <button type="submit">Join</button>
+    </form>
+  </div>
+  <div class="product-subscribe__image">
+    <img
+      src="{% static 'images/products/void-elite.png' %}"
+      alt="Dark technical sneaker in a studio spotlight"
+    />
+  </div>
+</section>
+{% endblock content %} {% block scripts %}
+<script src="{% static 'scripts/product_page.js' %}"></script>
+{% endblock scripts %}
