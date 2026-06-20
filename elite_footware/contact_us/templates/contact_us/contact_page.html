@@ -1,11 +1,109 @@
 {% extends "layout/layout.html" %} 
 {% load static %} 
-{% block title %}Contact US{%endblock title %} 
+{% block title %} Contact Us {% endblock title %} 
 {% block styles %}
 <link rel="stylesheet" href="{% static 'styles/contact_page.css' %}" />
 {% endblock styles %} 
+
 {% block content %}
-  <h2>Contact Us</h2>
-  <p>Get in touch with us!</p>
+<div class="contact-container">
+  <div class="contact-header">
+    <span class="contact-kicker">Get In Touch</span>
+    <h1>Connect with the Lab</h1>
+    <p>Have questions about sizing, customization, or corporate partnerships? Let's build the future of movement together.</p>
+  </div>
+
+  <div class="contact-grid">
+    <!-- Left Column: Form -->
+    <div class="contact-form-container">
+      <form id="contact-form" class="contact-form" method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-group">
+          <input type="text" id="form-name" name="name" required placeholder=" " />
+          <label for="form-name">Full Name</label>
+          <span class="form-bar"></span>
+        </div>
+
+        <div class="form-group">
+          <input type="email" id="form-email" name="email" required placeholder=" " />
+          <label for="form-email">Email Address</label>
+          <span class="form-bar"></span>
+        </div>
+
+        <div class="form-group">
+          <input type="text" id="form-subject" name="subject" required placeholder=" " />
+          <label for="form-subject">Subject</label>
+          <span class="form-bar"></span>
+        </div>
+
+        <div class="form-group">
+          <textarea id="form-message" name="message" required placeholder=" " rows="5"></textarea>
+          <label for="form-message">Message</label>
+          <span class="form-bar"></span>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          Send Message <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </form>
+
+      <!-- Glassmorphic Success Overlay Modal -->
+      <div id="success-modal" class="success-modal">
+        <div class="success-content">
+          <div class="success-icon">
+            <i class="fa-solid fa-check"></i>
+          </div>
+          <h3>Message Transmitted</h3>
+          <p>Thank you for reaching out. A specialist from our design lab will respond within 24 hours.</p>
+          <button type="button" id="close-modal" class="btn-close-modal">Done</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Info -->
+    <div class="contact-info-container">
+      <div class="info-block">
+        <div class="info-icon">
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+        <div class="info-text">
+          <h3>Direct Communications</h3>
+          <p><a href="mailto:info@elitefootwear.com">info@elitefootwear.com</a></p>
+          <p><a href="mailto:lab@elitefootwear.com">lab@elitefootwear.com</a></p>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="info-icon">
+          <i class="fa-solid fa-phone"></i>
+        </div>
+        <div class="info-text">
+          <h3>Voice Support</h3>
+          <p>+1 (555) 906-7810</p>
+          <p>Mon - Fri, 9:00 AM - 6:00 PM PST</p>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="info-icon">
+          <i class="fa-solid fa-location-dot"></i>
+        </div>
+        <div class="info-text">
+          <h3>HQ & Design Lab</h3>
+          <p>452 Structural Intelligence Way</p>
+          <p>Suite 100, San Francisco, CA 94107</p>
+        </div>
+      </div>
+
+      <!-- Architectural Workspace Visual -->
+      <div class="info-visual" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80');">
+        <div class="visual-tag">HQ Studio</div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
-{% block scripts %}{% endblock scripts %}
+
+{% block scripts %}
+<script src="{% static 'scripts/contact_page.js' %}"></script>
+{% endblock scripts %}

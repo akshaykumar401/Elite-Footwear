@@ -1,59 +1,89 @@
-{% extends "layout/layout.html" %} {% load static %} {% block title %}About
-US{%endblock title %} {% block styles %}
+{% extends "layout/layout.html" %} 
+{% load static %} 
+{% block title %} About Us {% endblock title %} 
+{% block styles %}
 <link rel="stylesheet" href="{% static 'styles/about_page.css' %}" />
-{% endblock styles %} {% block content %}
-<div class="about-container">
-  <h1>About Us</h1>
-  <p>
-    Welcome to Elite Footwear, your premier destination for high-quality shoes
-    and exceptional customer service. We are passionate about providing our
-    customers with the best footwear options that combine style, comfort, and
-    durability.
-  </p>
+{% endblock styles %} 
 
-  <h2>Our Mission</h2>
-  <p>
-    At Elite Footwear, our mission is to offer a wide range of shoes that cater
-    to diverse tastes and preferences. We strive to create a shopping experience
-    that is enjoyable and hassle-free, ensuring that every customer finds the
-    perfect pair of shoes for their needs.
-  </p>
-
-  <h2>Our Values</h2>
-  <ul>
-    <li>
-      <strong>Quality:</strong> We are committed to offering only the highest
-      quality footwear from trusted brands.
-    </li>
-    <li>
-      <strong>Customer Satisfaction:</strong> Our customers are at the heart of
-      everything we do, and we aim to exceed their expectations with every
-      purchase.
-    </li>
-    <li>
-      <strong>Innovation:</strong> We continuously seek out new styles and
-      technologies in footwear to provide our customers with the latest trends
-      and advancements.
-    </li>
-    <li>
-      <strong>Sustainability:</strong> We are dedicated to promoting sustainable
-      practices in our operations and offering eco-friendly footwear options.
-    </li>
-  </ul>
-
-  <h2>Our Team</h2>
-  <p>
-    Our team is made up of passionate individuals who are experts in the
-    footwear industry. From our knowledgeable sales staff to our dedicated
-    customer service representatives, we work together to ensure that every
-    customer has a positive experience with us.
-  </p>
-
-  <h2>Contact Us</h2>
-  <p>
-    If you have any questions or would like to learn more about our products and
-    services, please don't hesitate to contact us. We are here to help you find
-    the perfect pair of shoes!
-  </p>
-  {% endblock content %} {% block scripts %}{% endblock scripts %}
+{% block content %}
+<div class="about-hero">
+  <div class="about-hero__image" style="background-image: url('https://images.unsplash.com/photo-1556906781-9a412961c28c?auto=format&fit=crop&w=1600&q=80');"></div>
+  <div class="about-hero__overlay"></div>
+  <div class="about-hero__content">
+    <span class="about-kicker">Established 2026</span>
+    <h1>Defining the Future of Movement</h1>
+    <p>We craft technical footwear designed for modern life, blending structural intelligence with clean urban aesthetics.</p>
+  </div>
 </div>
+
+<div class="about-container">
+  <section class="about-story">
+    <div class="story-image">
+      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80" alt="Elite Footwear design workshop">
+    </div>
+    <div class="story-content">
+      <span class="section-kicker">Our Story & Mission</span>
+      <h2>Engineering Comfort for Every Silhouette</h2>
+      <p>
+        At Elite Footwear, we believe that shoes are more than just accessories—they are critical interfaces between the human body and the city terrain. Our mission is to offer a curated selection of footwear that combines advanced durability, exceptional comfort, and refined minimalism.
+      </p>
+      <p>
+        We work at the intersection of material science and contemporary design, constantly pushing the boundaries of what athletic and daily-use footwear can achieve.
+      </p>
+    </div>
+  </section>
+
+  <section class="about-values">
+    <div class="values-header">
+      <span class="section-kicker">Our Pillars</span>
+      <h2>The Core Values That Drive Us</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">
+          <i class="fa-solid fa-gem"></i>
+        </div>
+        <h3>Quality</h3>
+        <p>We source premium materials and partner with leading manufacturers to guarantee durability and flawless performance in every pair.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h3>Customer Satisfaction</h3>
+        <p>Our customers are at the core of our operations. We strive to provide a seamless shopping experience and responsive care at every touchpoint.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <i class="fa-solid fa-lightbulb"></i>
+        </div>
+        <h3>Innovation</h3>
+        <p>We continuously research and adopt cutting-edge structural silhouettes, advanced cushioning, and sustainable knit fabrics.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
+        <h3>Sustainability</h3>
+        <p>We are committed to reducing our environmental footprint by using recycled composites, low-impact processes, and circular packaging.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-team">
+    <div class="team-content">
+      <span class="section-kicker">The Collective</span>
+      <h2>Meet the Visionaries Behind the Silhouettes</h2>
+      <p>
+        Our team is a collective of shoe designers, material engineers, and digital innovators united by a shared passion for high-end industrial design and physical movement. Every silhouette we release is the result of rigorous prototyping and real-world testing.
+      </p>
+      <a href="{% url 'contact_page' %}" class="btn-cta">Partner with Us <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="team-image" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80');">
+    </div>
+  </section>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+{% endblock scripts %}
