@@ -1,0 +1,141 @@
+{% extends "layout/layout.html" %} 
+{% load static %} 
+{% block title %} {{ product.name }} {% endblock title %} 
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'styles/product_detail.css' %}" />
+{% endblock styles %} 
+
+{% block content %}
+<div class="product-detail-page">
+  <main class="detail-main">
+    <div class="detail-grid">
+      
+      <!-- Left Column: Image Gallery -->
+      <section class="product-gallery" aria-label="Product Images">
+        <div class="gallery-main-container">
+          {% if product.badge %}
+            <span class="gallery-badge">{{ product.badge }}</span>
+          {% endif %}
+          <img id="main-product-img" src="{% static product.colors.0.image %}" alt="{{ product.name }} main image" />
+        </div>
+        
+        <div class="gallery-thumbnails" id="gallery-thumbnails">
+          {% for thumb in product.colors.0.thumbnails %}
+            <div class="thumbnail-box {% if forloop.first %}active{% endif %}" data-img-url="{% static thumb %}">
+              <img src="{% static thumb %}" alt="Thumbnail angle view" />
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+      
+      <!-- Right Column: Information and Purchasing Controls -->
+      <section class="product-info-panel" aria-label="Product Information">
+        <h1>{{ product.name }}</h1>
+        <div class="product-price">{{ product.price }}</div>
+        <p class="product-description">{{ product.description }}</p>
+        
+        <!-- Color Selector Swatches -->
+        <div class="option-section">
+          <div class="option-title-container">
+            <div class="option-title">Select Color</div>
+            <span id="active-color-name">{{ product.colors.0.name }}</span>
+          </div>
+          <div class="swatch-group">
+            {% for col in product.colors %}
+              <button 
+                class="swatch-btn {% if forloop.first %}active{% endif %}" 
+                type="button" 
+                aria-label="{{ col.name }}" 
+                data-color-name="{{ col.name }}"
+                data-main-img="{% static col.image %}"
+                data-thumbs='[{% for t in col.thumbnails %}"{% static t %}"{% if not forloop.last %},{% endif %}{% endfor %}]'
+              >
+                <span style="background-color: {{ col.hex }};"></span>
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+        
+        <!-- Size Selector Grid -->
+        <div class="option-section">
+          <div class="size-header">
+            <div class="option-title">Select Size (US)</div>
+          </div>
+          <div class="size-grid">
+            {% for sz in product.sizes %}
+              <button 
+                class="size-btn" 
+                type="button" 
+                {% if not sz.available %}disabled{% endif %}
+              >
+                {{ sz.val }}
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+        
+        <!-- CTA Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn-add-to-cart" type="button">Add to Cart</button>
+          <button class="btn-wishlist" type="button">
+            <i class="fa-regular fa-heart"></i> Add to Wishlist
+          </button>
+        </div>
+        
+        <!-- Technical Specifications Accordion -->
+        <div class="specs-accordion">
+          <div class="accordion-header" id="specs-accordion-toggle">
+            <span class="accordion-title">Technical Specifications</span>
+            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+          </div>
+          <div class="accordion-content" id="specs-accordion-content">
+            <ul>
+              {% for spec in product.specs %}
+                <li>{{ spec }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </section>
+      
+    </div>
+  </main>
+  
+  <!-- Mid-Page Technology Showcase Section -->
+  <section class="showcase-section">
+    <div class="showcase-text">
+      <h2>{{ product.showcase_title }}</h2>
+      <p>{{ product.showcase_desc }}</p>
+    </div>
+    <div class="showcase-image-container">
+      <img src="{% static product.main_image %}" alt="{{ product.name }} detail technology close-up" />
+    </div>
+  </section>
+  
+  <!-- Recommendations "You May Also Like" Grid -->
+  <section class="recommendations" aria-labelledby="rec-title">
+    <div class="recommendations-header">
+      <h2 id="rec-title">You May Also Like</h2>
+      <a href="{% url 'product_page' %}" class="view-all-link">View All Performance</a>
+    </div>
+    <div class="recommendations-grid">
+      {% for rec in recommended_products %}
+        <a href="{% url 'product_detail' rec.id %}" class="rec-card">
+          <div class="rec-image-box">
+            <img src="{% static rec.image %}" alt="{{ rec.name }} thumbnail image" />
+          </div>
+          <div class="rec-meta">
+            <h3>{{ rec.name }}</h3>
+            <span>{{ rec.price }}</span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'scripts/product_detail.js' %}"></script>
+{% endblock scripts %}

@@ -47,7 +47,7 @@
   </div>
 
   <div class="product-grid">
-    <a href="#" class="product-card" data-category="Running" data-gender="Men" data-price="280.00" data-newest="6">
+    <a href="{% url 'product_detail' 1 %}" class="product-card" data-category="Running" data-gender="Men" data-price="280.00" data-newest="6">
       <div class="product-card__image" aria-label="View Kinetic V2">
         <span class="product-badge">New</span>
         <img
@@ -64,7 +64,7 @@
       </div>
     </a>
 
-    <a href="#" class="product-card" data-category="Lifestyle" data-gender="Men" data-price="240.00" data-newest="5">
+    <a href="{% url 'product_detail' 2 %}" class="product-card" data-category="Lifestyle" data-gender="Men" data-price="240.00" data-newest="5">
       <div class="product-card__image" aria-label="View Architect Low">
         <img
           src="{% static 'images/products/architect-low.png' %}"
@@ -80,7 +80,7 @@
       </div>
     </a>
 
-    <a href="#" class="product-card" data-category="Running" data-gender="Women" data-price="320.00" data-newest="4">
+    <a href="{% url 'product_detail' 3 %}" class="product-card" data-category="Running" data-gender="Women" data-price="320.00" data-newest="4">
       <div class="product-card__image" aria-label="View Void Elite">
         <span class="product-badge">New</span>
         <img
@@ -97,7 +97,7 @@
       </div>
     </a>
 
-    <a href="#" class="product-card" data-category="Studio" data-gender="Unisex" data-price="265.00" data-newest="3">
+    <a href="{% url 'product_detail' 4 %}" class="product-card" data-category="Studio" data-gender="Unisex" data-price="265.00" data-newest="3">
       <div class="product-card__image" aria-label="View Struct Scape">
         <img
           src="{% static 'images/products/struct-scape.png' %}"
@@ -113,7 +113,7 @@
       </div>
     </a>
 
-    <a href="#" class="product-card" data-category="Lifestyle" data-gender="Women" data-price="450.00" data-newest="2">
+    <a href="{% url 'product_detail' 5 %}" class="product-card" data-category="Lifestyle" data-gender="Women" data-price="450.00" data-newest="2">
       <div class="product-card__image" aria-label="View Carbon Zero">
         <span class="product-badge">Limited</span>
         <img
@@ -130,7 +130,7 @@
       </div>
     </a>
 
-    <a href="#" class="product-card" data-category="Studio" data-gender="Unisex" data-price="190.00" data-newest="1">
+    <a href="{% url 'product_detail' 6 %}" class="product-card" data-category="Studio" data-gender="Unisex" data-price="190.00" data-newest="1">
       <div class="product-card__image" aria-label="View Orange Element">
         <img
           src="{% static 'images/products/orange-element.png' %}"

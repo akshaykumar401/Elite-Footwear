@@ -13,6 +13,9 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'styles/layout.css' %}" />
     {% block styles %}{% endblock styles %}
   </head>
@@ -65,11 +68,11 @@
         </li>
       </ul>
       <div class="nav-actions">
-        <a href="#" class="user-link" aria-label="User account">
+        <a href="{% url 'user_page' %}" class="user-link" aria-label="User account">
           <i class="fa-solid fa-user user-icon" aria-hidden="true"></i>
         </a>
 
-        <a href="#" class="cart-link">
+        <a href="{% url 'cart_page' %}" class="cart-link">
           <i class="fa-solid fa-cart-shopping cart-icon" aria-hidden="true"></i>
           <span class="cart-count">0</span>
           <span class="sr-only">Cart</span>
