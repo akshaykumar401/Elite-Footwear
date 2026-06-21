@@ -1,12 +1,158 @@
+{% extends "layout/layout.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>Cart Page</h1>
-</body>
-</html>
+{% block title %} Shopping Cart {% endblock title %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'styles/cart_page.css' %}" />
+{% endblock styles %}
+
+{% block content %}
+<div class="cart-page-container">
+  
+  <!-- Empty State Container (Hidden if items present) -->
+  <div class="cart-empty-state {% if cart_items %}hidden{% endif %}" id="cart-empty-state">
+    <div class="empty-icon-container">
+      <i class="fa-solid fa-bag-shopping"></i>
+    </div>
+    <h2>Your Cart is Empty</h2>
+    <p>Looks like you haven't added anything to your cart yet. Explore our performance collections and find the perfect pair.</p>
+    <a href="{% url 'product_page' %}" class="btn-explore">Explore Products</a>
+  </div>
+
+  <!-- Active Cart Container -->
+  <div class="cart-active-container {% if not cart_items %}hidden{% endif %}" id="cart-active-container">
+    <h1 class="cart-title">Your Cart (<span id="cart-title-count">{{ cart_items|length }}</span>)</h1>
+    
+    <div class="cart-grid">
+      <!-- Left Column: Items List -->
+      <div class="cart-items-column">
+        <div class="cart-items-list">
+          {% for item in cart_items %}
+            <div class="cart-item-row" data-item-key="{{ item.item_key }}">
+              <div class="item-image-box">
+                <img src="{% static item.image %}" alt="{{ item.product.name }} in {{ item.color }}" />
+              </div>
+              
+              <div class="item-details-box">
+                <div class="item-header">
+                  <div>
+                    <h3 class="item-name">
+                      <a href="{% url 'product_detail' item.product.id %}">{{ item.product.name }}</a>
+                    </h3>
+                    <p class="item-sub">{{ item.product.sub_title }}</p>
+                  </div>
+                  <button type="button" class="btn-remove-item" data-item-key="{{ item.item_key }}" aria-label="Remove item">
+                    <i class="fa-regular fa-trash-can"></i>
+                  </button>
+                </div>
+                
+                <div class="item-options">
+                  <span class="option-tag">Color: <strong>{{ item.color }}</strong></span>
+                  <span class="option-tag">Size: <strong>{{ item.size }}</strong></span>
+                </div>
+                
+                <div class="item-pricing-row">
+                  <!-- Quantity Selector -->
+                  <div class="quantity-controller">
+                    <button type="button" class="qty-btn minus" data-item-key="{{ item.item_key }}">&minus;</button>
+                    <input type="text" class="qty-input" value="{{ item.quantity }}" data-item-key="{{ item.item_key }}" readonly />
+                    <button type="button" class="qty-btn plus" data-item-key="{{ item.item_key }}">&plus;</button>
+                  </div>
+                  
+                  <div class="price-container">
+                    <span class="unit-price">{{ item.price_str }} each</span>
+                    <span class="total-price" id="total-price-{{ item.item_key }}">{{ item.total_price_str }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      
+      <!-- Right Column: Summary Card -->
+      <div class="cart-summary-column">
+        <div class="summary-card">
+          <h2>Order Summary</h2>
+          
+          <div class="summary-rows">
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span id="summary-subtotal">{{ subtotal_str }}</span>
+            </div>
+            
+            <div class="summary-row">
+              <span>Shipping</span>
+              <span id="summary-shipping">{{ shipping_str }}</span>
+            </div>
+            
+            <div class="summary-row">
+              <span>Estimated Tax (8%)</span>
+              <span id="summary-tax">{{ tax_str }}</span>
+            </div>
+            
+            <!-- Promo Code Discount Row -->
+            <div class="summary-row discount-row hidden" id="summary-discount-row">
+              <span class="discount-label">Discount (<span id="active-promo-badge"></span>)</span>
+              <span class="discount-amount" id="summary-discount">-$0.00</span>
+            </div>
+            
+            <hr class="summary-divider" />
+            
+            <div class="summary-row total-row">
+              <span>Total</span>
+              <span id="summary-total">{{ total_str }}</span>
+            </div>
+          </div>
+          
+          <!-- Promo Code Form -->
+          <div class="promo-code-container">
+            <label for="promo-input" class="sr-only">Promo Code</label>
+            <div class="promo-input-group">
+              <input type="text" id="promo-input" placeholder="Promo Code (e.g. ELITE10)" autocomplete="off" spellcheck="false" />
+              <button type="button" id="promo-apply-btn">Apply</button>
+            </div>
+            <p id="promo-message" class="promo-message"></p>
+          </div>
+          
+          <!-- Checkout CTA -->
+          <button type="button" class="btn-checkout" id="btn-checkout">
+            Proceed to Checkout
+          </button>
+          
+          <div class="checkout-footer-notes">
+            <p><i class="fa-solid fa-lock"></i> Secure 256-bit SSL encrypted checkout.</p>
+            <p><i class="fa-solid fa-truck-fast"></i> Free standard shipping on orders over $300.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recommendations Block -->
+  <section class="cart-recommendations" aria-labelledby="cart-rec-title">
+    <div class="recommendations-header">
+      <h2 id="cart-rec-title">You May Also Like</h2>
+      <a href="{% url 'product_page' %}" class="view-all-link">View All Products</a>
+    </div>
+    
+    <div class="recommendations-grid">
+      {% for rec in recommended_products %}
+        <a href="{% url 'product_detail' rec.id %}" class="rec-card">
+          <div class="rec-image-box">
+            <img src="{% static rec.image %}" alt="{{ rec.name }} image" />
+          </div>
+          <div class="rec-meta">
+            <h3>{{ rec.name }}</h3>
+            <span>{{ rec.price }}</span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+  <script src="{% static 'scripts/cart_page.js' %}"></script>
+{% endblock scripts %}

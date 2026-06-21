@@ -28,6 +28,10 @@ nav {
   font-size: clamp(20px, 3vw, 28px);
   line-height: 1.1;
 }
+.logo h1 a{
+  text-decoration: none;
+  color: #1B1C1C;
+}
 .nav-links {
   display: flex;
   align-items: center;

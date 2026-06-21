@@ -23,7 +23,7 @@
     {% comment %} NavBar {% endcomment %}
     <nav class="site-nav">
       <div class="logo">
-        <h1>Elite Footware</h1>
+        <h1><a href="{% url 'home' %}">Elite Footware</a></h1>
       </div>
       <ul class="nav-links" id="primary-navigation">
         <li>
@@ -74,7 +74,7 @@
 
         <a href="{% url 'cart_page' %}" class="cart-link">
           <i class="fa-solid fa-cart-shopping cart-icon" aria-hidden="true"></i>
-          <span class="cart-count">0</span>
+          <span class="cart-count" id="nav-cart-count">{{ cart_count }}</span>
           <span class="sr-only">Cart</span>
         </a>
 
@@ -103,9 +103,9 @@
         </div>
 
         <ul class="footer-links">
-          <li><a href="#">Shopping</a></li>
+          <li><a href="{% url 'product_page' %}">Shopping</a></li>
           <li><a href="#">Return</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="{% url 'contact_page' %}">Contact</a></li>
           <li><a href="#">Teams</a></li>
           <li><a href="#">Terms & Conditions</a></li>
           <li><a href="#">Privacy Policy</a></li>

@@ -77,12 +77,167 @@ document.addEventListener("DOMContentLoaded", function () {
   const accordionToggle = document.getElementById("specs-accordion-toggle");
   const accordionContent = document.getElementById("specs-accordion-content");
 
-  accordionToggle.addEventListener("click", function () {
-    const isActive = this.classList.toggle("active");
-    if (isActive) {
-      accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
-    } else {
-      accordionContent.style.maxHeight = "0";
+  if (accordionToggle && accordionContent) {
+    accordionToggle.addEventListener("click", function () {
+      const isActive = this.classList.toggle("active");
+      if (isActive) {
+        accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+      } else {
+        accordionContent.style.maxHeight = "0";
+      }
+    });
+  }
+
+  // Helper function to get CSRF token
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + "=")) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
     }
-  });
+    return cookieValue;
+  }
+
+  // Toast Notification Helper
+  function showToast(message, isError = false) {
+    let container = document.getElementById("toast-container");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "toast-container";
+      container.style.position = "fixed";
+      container.style.bottom = "24px";
+      container.style.right = "24px";
+      container.style.zIndex = "1000";
+      container.style.display = "flex";
+      container.style.flexDirection = "column";
+      container.style.gap = "10px";
+      document.body.appendChild(container);
+    }
+    
+    const toast = document.createElement("div");
+    toast.className = `toast-message ${isError ? "error" : "success"}`;
+    toast.style.background = isError ? "rgba(220, 53, 69, 0.95)" : "rgba(27, 28, 28, 0.95)";
+    toast.style.color = "#fff";
+    toast.style.padding = "14px 24px";
+    toast.style.borderRadius = "8px";
+    toast.style.boxShadow = "0 8px 30px rgba(0,0,0,0.15)";
+    toast.style.fontFamily = "Outfit, sans-serif";
+    toast.style.fontWeight = "500";
+    toast.style.fontSize = "14px";
+    toast.style.minWidth = "280px";
+    toast.style.display = "flex";
+    toast.style.alignItems = "center";
+    toast.style.justifyContent = "space-between";
+    toast.style.opacity = "0";
+    toast.style.transform = "translateY(20px)";
+    toast.style.transition = "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)";
+    
+    const icon = isError 
+      ? '<i class="fa-solid fa-circle-exclamation" style="margin-right:10px;color:#ff4d4d;font-size:16px;"></i>' 
+      : '<i class="fa-solid fa-circle-check" style="margin-right:10px;color:#4caf50;font-size:16px;"></i>';
+      
+    toast.innerHTML = `
+      <div style="display:flex;align-items:center;">
+        ${icon}
+        <span>${message}</span>
+      </div>
+      <button style="background:none;border:none;color:#fff;cursor:pointer;margin-left:15px;font-size:16px;line-height:1;">&times;</button>
+    `;
+    
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.style.opacity = "1";
+      toast.style.transform = "translateY(0)";
+    }, 10);
+    
+    const removeTimeout = setTimeout(() => {
+      toast.style.opacity = "0";
+      toast.style.transform = "translateY(-20px)";
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
+    }, 4000);
+    
+    toast.querySelector("button").addEventListener("click", () => {
+      clearTimeout(removeTimeout);
+      toast.style.opacity = "0";
+      toast.style.transform = "translateY(-20px)";
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
+    });
+  }
+
+  // Handle Add to Cart Click
+  const btnAddToCart = document.getElementById("btn-add-to-cart");
+  if (btnAddToCart) {
+    btnAddToCart.addEventListener("click", function () {
+      const productId = this.getAttribute("data-product-id");
+      const activeColorSpan = document.getElementById("active-color-name");
+      const color = activeColorSpan ? activeColorSpan.textContent.trim() : "";
+      
+      const selectedSizeBtn = document.querySelector(".size-btn.active");
+      if (!selectedSizeBtn) {
+        showToast("Please select a size before adding to cart.", true);
+        return;
+      }
+      
+      const size = selectedSizeBtn.textContent.trim();
+      
+      this.disabled = true;
+      const originalText = this.textContent;
+      this.textContent = "Adding...";
+      
+      fetch("/cart/add/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: JSON.stringify({
+          product_id: productId,
+          color: color,
+          size: size,
+          quantity: 1
+        })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.success) {
+          showToast("Successfully added to your shopping cart!");
+          const cartBadge = document.getElementById("nav-cart-count");
+          if (cartBadge) {
+            cartBadge.textContent = data.cart_count;
+            // Add a little pop animation to the badge
+            cartBadge.style.transform = "scale(1.3)";
+            setTimeout(() => {
+              cartBadge.style.transform = "scale(1)";
+            }, 200);
+          }
+        } else {
+          showToast(data.error || "Failed to add item.", true);
+        }
+      })
+      .catch(error => {
+        console.error("Error adding to cart:", error);
+        showToast("An error occurred. Please try again.", true);
+      })
+      .finally(() => {
+        this.disabled = false;
+        this.textContent = originalText;
+      });
+    });
+  }
 });
