@@ -3,19 +3,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const successModal = document.getElementById("success-modal");
   const closeModalBtn = document.getElementById("close-modal");
 
-  if (form && successModal) {
+  if (form) {
     form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const nameInput = document.getElementById("form-name");
-      const emailInput = document.getElementById("form-email");
-      const subjectInput = document.getElementById("form-subject");
-      const messageInput = document.getElementById("form-message");
+      const nameInput = document.getElementById("id_full_name");
+      const emailInput = document.getElementById("id_email");
+      const subjectInput = document.getElementById("id_subject");
+      const messageInput = document.getElementById("id_message");
 
       let isValid = true;
 
       // Simple visual validation function
       const validateField = (input, condition) => {
+        if (!input) return true;
         if (condition) {
           input.style.borderColor = "";
           return true;
@@ -36,30 +35,32 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       // Validate inputs
-      if (!validateField(nameInput, nameInput.value.trim() !== "")) isValid = false;
+      if (nameInput && !validateField(nameInput, nameInput.value.trim() !== "")) isValid = false;
       
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!validateField(emailInput, emailRegex.test(emailInput.value.trim()))) isValid = false;
+      if (emailInput && !validateField(emailInput, emailRegex.test(emailInput.value.trim()))) isValid = false;
 
-      if (!validateField(subjectInput, subjectInput.value.trim() !== "")) isValid = false;
-      if (!validateField(messageInput, messageInput.value.trim() !== "")) isValid = false;
+      if (subjectInput && !validateField(subjectInput, subjectInput.value.trim() !== "")) isValid = false;
+      if (messageInput && !validateField(messageInput, messageInput.value.trim() !== "")) isValid = false;
 
-      // If valid, show custom success state
-      if (isValid) {
-        successModal.classList.add("is-visible");
+      // If NOT valid, prevent submission
+      if (!isValid) {
+        e.preventDefault();
       }
     });
   }
 
-  if (closeModalBtn && successModal && form) {
+  if (closeModalBtn && successModal) {
     closeModalBtn.addEventListener("click", () => {
       successModal.classList.remove("is-visible");
-      form.reset();
-      
-      // Reset any error border colors
-      form.querySelectorAll("input, textarea").forEach((field) => {
-        field.style.borderColor = "";
-      });
+      if (form) {
+        form.reset();
+        
+        // Reset any error border colors
+        form.querySelectorAll("input, textarea").forEach((field) => {
+          field.style.borderColor = "";
+        });
+      }
     });
   }
 });
