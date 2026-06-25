@@ -27,7 +27,7 @@ def user_page(request):
                     {
                         'name': 'ARCHITECT V.1 PERFORMANCE',
                         'color': 'Stealth Black',
-                        'image': 'images/products/architect-low.png',
+                        'image': '/static/images/products/architect-low.png',
                         'size': '10.5'
                     }
                 ]
@@ -42,7 +42,7 @@ def user_page(request):
                     {
                         'name': 'APEX TRAIL RUNNER',
                         'color': 'Orange Burst',
-                        'image': 'images/products/kinetic-v2.png',
+                        'image': '/static/images/products/kinetic-v2.png',
                         'size': '10.0'
                     }
                 ]
@@ -57,7 +57,7 @@ def user_page(request):
                     {
                         'name': 'COURT CLASSIC LUX',
                         'color': 'Sandy Beige',
-                        'image': 'images/products/carbon-zero.png',
+                        'image': '/static/images/products/carbon-zero.png',
                         'size': '10.5'
                     }
                 ]
@@ -68,19 +68,19 @@ def user_page(request):
                 'id': 2,
                 'name': 'ARCHITECT V.1 PERFORMANCE',
                 'price': '$260.00',
-                'image': 'images/products/orange-element.png'
+                'image': '/static/images/products/orange-element.png'
             },
             {
                 'id': 3,
                 'name': 'APEX TRAIL RUNNER',
                 'price': '$220.00',
-                'image': 'images/products/void-elite.png'
+                'image': '/static/images/products/void-elite.png'
             },
             {
                 'id': 1,
                 'name': 'COURT CLASSIC LUX',
                 'price': '$180.00',
-                'image': 'images/products/kinetic-v2.png'
+                'image': '/static/images/products/kinetic-v2.png'
             }
         ],
         'addresses': [
@@ -90,7 +90,7 @@ def user_page(request):
                 'line1': '1428 Architecture Way, Suite 400',
                 'city_state_zip': 'San Francisco, CA 94103',
                 'phone': '+1 (555) 019-2834'
-            },
+              },
             {
                 'label': 'Office Address',
                 'name': 'Alex Carter',

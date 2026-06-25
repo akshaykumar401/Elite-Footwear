@@ -17,13 +17,13 @@
           {% if product.badge %}
             <span class="gallery-badge">{{ product.badge }}</span>
           {% endif %}
-          <img id="main-product-img" src="{% static product.colors.0.image %}" alt="{{ product.name }} main image" />
+          <img id="main-product-img" src="{% firstof product.colors.0.image product.main_image %}" alt="{{ product.name }} main image" />
         </div>
         
         <div class="gallery-thumbnails" id="gallery-thumbnails">
           {% for thumb in product.colors.0.thumbnails %}
-            <div class="thumbnail-box {% if forloop.first %}active{% endif %}" data-img-url="{% static thumb %}">
-              <img src="{% static thumb %}" alt="Thumbnail angle view" />
+            <div class="thumbnail-box {% if forloop.first %}active{% endif %}" data-img-url="{{ thumb }}">
+              <img src="{{ thumb }}" alt="Thumbnail angle view" />
             </div>
           {% endfor %}
         </div>
@@ -48,8 +48,8 @@
                 type="button" 
                 aria-label="{{ col.name }}" 
                 data-color-name="{{ col.name }}"
-                data-main-img="{% static col.image %}"
-                data-thumbs='[{% for t in col.thumbnails %}"{% static t %}"{% if not forloop.last %},{% endif %}{% endfor %}]'
+                data-main-img="{{ col.image }}"
+                data-thumbs='[{% for t in col.thumbnails %}"{{ t }}"{% if not forloop.last %},{% endif %}{% endfor %}]'
               >
                 <span style="background-color: {{ col.hex }};"></span>
               </button>
@@ -82,21 +82,6 @@
             <i class="fa-regular fa-heart"></i> Add to Wishlist
           </button>
         </div>
-        
-        <!-- Technical Specifications Accordion -->
-        <div class="specs-accordion">
-          <div class="accordion-header" id="specs-accordion-toggle">
-            <span class="accordion-title">Technical Specifications</span>
-            <i class="fa-solid fa-chevron-down accordion-icon"></i>
-          </div>
-          <div class="accordion-content" id="specs-accordion-content">
-            <ul>
-              {% for spec in product.specs %}
-                <li>{{ spec }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
       </section>
       
     </div>
@@ -109,7 +94,7 @@
       <p>{{ product.showcase_desc }}</p>
     </div>
     <div class="showcase-image-container">
-      <img src="{% static product.main_image %}" alt="{{ product.name }} detail technology close-up" />
+      <img src="{{ product.main_image }}" alt="{{ product.name }} detail technology close-up" />
     </div>
   </section>
   
@@ -123,7 +108,7 @@
       {% for rec in recommended_products %}
         <a href="{% url 'product_detail' rec.id %}" class="rec-card">
           <div class="rec-image-box">
-            <img src="{% static rec.image %}" alt="{{ rec.name }} thumbnail image" />
+            <img src="{{ rec.image }}" alt="{{ rec.name }} thumbnail image" />
           </div>
           <div class="rec-meta">
             <h3>{{ rec.name }}</h3>

@@ -147,7 +147,7 @@
                   {% for item in order.items %}
                     <div class="ordered-item-row">
                       <div class="item-img-box">
-                        <img src="{% static item.image %}" alt="{{ item.name }}" />
+                        <img src="{{ item.image }}" alt="{{ item.name }}" />
                       </div>
                       <div class="item-details">
                         <h3>{{ item.name }}</h3>
@@ -192,7 +192,7 @@
                 </button>
                 <a href="{% url 'product_detail' item.id %}" class="wishlist-card-link">
                   <div class="wishlist-img-box">
-                    <img src="{% static item.image %}" alt="{{ item.name }}" />
+                    <img src="{{ item.image }}" alt="{{ item.name }}" />
                   </div>
                   <div class="wishlist-meta">
                     <h3>{{ item.name }}</h3>

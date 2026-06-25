@@ -30,7 +30,7 @@
           {% for item in cart_items %}
             <div class="cart-item-row" data-item-key="{{ item.item_key }}">
               <div class="item-image-box">
-                <img src="{% static item.image %}" alt="{{ item.product.name }} in {{ item.color }}" />
+                <img src="{{ item.image }}" alt="{{ item.product.name }} in {{ item.color }}" />
               </div>
               
               <div class="item-details-box">
@@ -140,7 +140,7 @@
       {% for rec in recommended_products %}
         <a href="{% url 'product_detail' rec.id %}" class="rec-card">
           <div class="rec-image-box">
-            <img src="{% static rec.image %}" alt="{{ rec.name }} image" />
+            <img src="{{ rec.image }}" alt="{{ rec.name }} image" />
           </div>
           <div class="rec-meta">
             <h3>{{ rec.name }}</h3>

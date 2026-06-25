@@ -11,7 +11,7 @@
       <span>Filter <i class="fa-solid fa-sliders" aria-hidden="true"></i></span>
     </button>
     <div class="catalog-count">
-      <span class="count-text">6 Products Found</span>
+      <span class="count-text">{{ products|length }} Product{% if products|length != 1 %}s{% endif %} Found</span>
     </div>
   </div>
 
@@ -22,8 +22,12 @@
         <ul class="filter-list" data-filter-group="category">
           <li><button type="button" class="filter-btn active" data-value="All">All Categories</button></li>
           <li><button type="button" class="filter-btn" data-value="Running">Running</button></li>
-          <li><button type="button" class="filter-btn" data-value="Lifestyle">Lifestyle</button></li>
-          <li><button type="button" class="filter-btn" data-value="Studio">Studio</button></li>
+          <li><button type="button" class="filter-btn" data-value="Casual">Casual</button></li>
+          <li><button type="button" class="filter-btn" data-value="Formal">Formal</button></li>
+          <li><button type="button" class="filter-btn" data-value="Sports">Sports</button></li>
+          <li><button type="button" class="filter-btn" data-value="Boots">Boots</button></li>
+          <li><button type="button" class="filter-btn" data-value="Sandals">Sandals</button></li>
+          <li><button type="button" class="filter-btn" data-value="Slippers">Slippers</button></li>
         </ul>
       </div>
       <div class="filter-column">
@@ -32,6 +36,7 @@
           <li><button type="button" class="filter-btn active" data-value="All">All Genders</button></li>
           <li><button type="button" class="filter-btn" data-value="Men">Men</button></li>
           <li><button type="button" class="filter-btn" data-value="Women">Women</button></li>
+          <li><button type="button" class="filter-btn" data-value="Kids">Kids</button></li>
           <li><button type="button" class="filter-btn" data-value="Unisex">Unisex</button></li>
         </ul>
       </div>
@@ -47,109 +52,33 @@
   </div>
 
   <div class="product-grid">
-    <a href="{% url 'product_detail' 1 %}" class="product-card" data-category="Running" data-gender="Men" data-price="280.00" data-newest="6">
-      <div class="product-card__image" aria-label="View Kinetic V2">
-        <span class="product-badge">New</span>
+    {% for p in products %}
+    <a href="{% url 'product_detail' p.id %}" class="product-card" data-category="{{ p.category }}" data-gender="{{ p.gender }}" data-price="{{ p.price|cut:'$' }}" data-newest="{{ p.id }}">
+      <div class="product-card__image" aria-label="View {{ p.name }}">
+        {% if p.badge %}
+          <span class="product-badge">{{ p.badge }}</span>
+        {% endif %}
         <img
-          src="{% static 'images/products/kinetic-v2.png' %}"
-          alt="White Kinetic V2 running shoe"
+          src="{{ p.main_image }}"
+          alt="{{ p.name }} image"
         />
       </div>
       <div class="product-card__meta">
         <div>
-          <h3>Kinetic V2</h3>
-          <p>Performance Running</p>
+          <h3>{{ p.name }}</h3>
+          <p>{{ p.sub_title }}</p>
         </div>
-        <strong>$280.00</strong>
+        <strong>{{ p.price }}</strong>
       </div>
     </a>
-
-    <a href="{% url 'product_detail' 2 %}" class="product-card" data-category="Lifestyle" data-gender="Men" data-price="240.00" data-newest="5">
-      <div class="product-card__image" aria-label="View Architect Low">
-        <img
-          src="{% static 'images/products/architect-low.png' %}"
-          alt="Black Architect Low lifestyle shoe"
-        />
-      </div>
-      <div class="product-card__meta">
-        <div>
-          <h3>Architect Low</h3>
-          <p>Urban Lifestyle</p>
-        </div>
-        <strong>$240.00</strong>
-      </div>
-    </a>
-
-    <a href="{% url 'product_detail' 3 %}" class="product-card" data-category="Running" data-gender="Women" data-price="320.00" data-newest="4">
-      <div class="product-card__image" aria-label="View Void Elite">
-        <span class="product-badge">New</span>
-        <img
-          src="{% static 'images/products/void-elite.png' %}"
-          alt="Black Void Elite track shoe"
-        />
-      </div>
-      <div class="product-card__meta">
-        <div>
-          <h3>Void Elite</h3>
-          <p>Elite Track</p>
-        </div>
-        <strong>$320.00</strong>
-      </div>
-    </a>
-
-    <a href="{% url 'product_detail' 4 %}" class="product-card" data-category="Studio" data-gender="Unisex" data-price="265.00" data-newest="3">
-      <div class="product-card__image" aria-label="View Struct Scape">
-        <img
-          src="{% static 'images/products/struct-scape.png' %}"
-          alt="Beige Struct Scape trail shoe"
-        />
-      </div>
-      <div class="product-card__meta">
-        <div>
-          <h3>Struct Scape</h3>
-          <p>Trail & Terrain</p>
-        </div>
-        <strong>$265.00</strong>
-      </div>
-    </a>
-
-    <a href="{% url 'product_detail' 5 %}" class="product-card" data-category="Lifestyle" data-gender="Women" data-price="450.00" data-newest="2">
-      <div class="product-card__image" aria-label="View Carbon Zero">
-        <span class="product-badge">Limited</span>
-        <img
-          src="{% static 'images/products/carbon-zero.png' %}"
-          alt="White Carbon Zero concept shoe"
-        />
-      </div>
-      <div class="product-card__meta">
-        <div>
-          <h3>Carbon Zero</h3>
-          <p>Archive Concept</p>
-        </div>
-        <strong>$450.00</strong>
-      </div>
-    </a>
-
-    <a href="{% url 'product_detail' 6 %}" class="product-card" data-category="Studio" data-gender="Unisex" data-price="190.00" data-newest="1">
-      <div class="product-card__image" aria-label="View Orange Element">
-        <img
-          src="{% static 'images/products/orange-element.png' %}"
-          alt="Orange Element training shoe"
-        />
-      </div>
-      <div class="product-card__meta">
-        <div>
-          <h3>Orange Element</h3>
-          <p>Training</p>
-        </div>
-        <strong>$190.00</strong>
-      </div>
-    </a>
+    {% empty %}
+    <p>No products available.</p>
+    {% endfor %}
   </div>
 
   <div class="catalog-more">
     <button type="button">Load More Arrivals</button>
-    <span class="count-showing">Showing 6 of 6 Products</span>
+    <span class="count-showing">Showing {{ products|length }} of {{ products|length }} Products</span>
   </div>
 </section>
 

@@ -72,22 +72,6 @@ document.addEventListener("DOMContentLoaded", function () {
       this.classList.add("active");
     });
   });
-
-  // Set up specifications accordion expand/collapse logic
-  const accordionToggle = document.getElementById("specs-accordion-toggle");
-  const accordionContent = document.getElementById("specs-accordion-content");
-
-  if (accordionToggle && accordionContent) {
-    accordionToggle.addEventListener("click", function () {
-      const isActive = this.classList.toggle("active");
-      if (isActive) {
-        accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
-      } else {
-        accordionContent.style.maxHeight = "0";
-      }
-    });
-  }
-
   // Helper function to get CSRF token
   function getCookie(name) {
     let cookieValue = null;
