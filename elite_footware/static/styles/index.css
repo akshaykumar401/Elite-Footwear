@@ -176,6 +176,14 @@
   text-transform: uppercase;
 }
 
+.product-badge.out-of-stock {
+  background-color: #6f7173;
+}
+
+.product-card.out-of-stock .product-image img {
+  opacity: 0.6;
+}
+
 .product-info {
   display: flex;
   justify-content: space-between;

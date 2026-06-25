@@ -124,6 +124,14 @@ main {
   text-transform: uppercase;
 }
 
+.product-badge.out-of-stock {
+  background: #6f7173;
+}
+
+.product-card.out-of-stock .product-card__image img {
+  opacity: 0.6;
+}
+
 .product-card__meta {
   display: flex;
   align-items: flex-start;

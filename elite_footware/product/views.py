@@ -106,7 +106,8 @@ def get_product_dict(product_id):
         'gender': product.gender or '',
         'showcase_title': product.secondary_title or '',
         'showcase_desc': product.secondary_description or '',
-        'main_image': main_image
+        'main_image': main_image,
+        'available': product.product_available
     }
 
 class DatabaseProductsMapping:

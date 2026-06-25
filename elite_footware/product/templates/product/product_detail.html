@@ -3,7 +3,7 @@
 {% block title %} {{ product.name }} {% endblock title %} 
 
 {% block styles %}
-  <link rel="stylesheet" href="{% static 'styles/product_detail.css' %}" />
+  <link rel="stylesheet" href="{% static 'styles/product_detail.css' %}?v=1.0" />
 {% endblock styles %} 
 
 {% block content %}
@@ -14,7 +14,9 @@
       <!-- Left Column: Image Gallery -->
       <section class="product-gallery" aria-label="Product Images">
         <div class="gallery-main-container">
-          {% if product.badge %}
+          {% if not product.available %}
+            <span class="gallery-badge out-of-stock">Out of Stock</span>
+          {% elif product.badge %}
             <span class="gallery-badge">{{ product.badge }}</span>
           {% endif %}
           <img id="main-product-img" src="{% firstof product.colors.0.image product.main_image %}" alt="{{ product.name }} main image" />
@@ -77,7 +79,9 @@
         
         <!-- CTA Action Buttons -->
         <div class="action-buttons">
-          <button class="btn-add-to-cart" id="btn-add-to-cart" data-product-id="{{ product.id }}" type="button">Add to Cart</button>
+          <button class="btn-add-to-cart" id="btn-add-to-cart" data-product-id="{{ product.id }}" type="button" {% if not product.available %}disabled{% endif %}>
+            {% if product.available %}Add to Cart{% else %}Out of Stock{% endif %}
+          </button>
           <button class="btn-wishlist" type="button">
             <i class="fa-regular fa-heart"></i> Add to Wishlist
           </button>

@@ -2,7 +2,7 @@
 {% load static %} 
 {% block title %}Product{%endblock title %} 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'styles/product_page.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/product_page.css' %}?v=1.0" />
 {% endblock styles %}
 {% block content %}
 <section class="catalog" aria-label="New arrival products">
@@ -53,9 +53,11 @@
 
   <div class="product-grid">
     {% for p in products %}
-    <a href="{% url 'product_detail' p.id %}" class="product-card" data-category="{{ p.category }}" data-gender="{{ p.gender }}" data-price="{{ p.price|cut:'$' }}" data-newest="{{ p.id }}">
+    <a href="{% url 'product_detail' p.id %}" class="product-card {% if not p.available %}out-of-stock{% endif %}" data-category="{{ p.category }}" data-gender="{{ p.gender }}" data-price="{{ p.price|cut:'$' }}" data-newest="{{ p.id }}">
       <div class="product-card__image" aria-label="View {{ p.name }}">
-        {% if p.badge %}
+        {% if not p.available %}
+          <span class="product-badge out-of-stock">Out of Stock</span>
+        {% elif p.badge %}
           <span class="product-badge">{{ p.badge }}</span>
         {% endif %}
         <img

@@ -184,6 +184,10 @@
   z-index: 5;
 }
 
+.gallery-badge.out-of-stock {
+  background-color: #6f7173;
+}
+
 .gallery-thumbnails {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -428,6 +432,17 @@
 
 .btn-add-to-cart:hover {
   box-shadow: 0 6px 20px rgba(216, 66, 0, 0.2);
+}
+
+.btn-add-to-cart:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-add-to-cart:disabled::before {
+  display: none;
 }
 
 .btn-wishlist {

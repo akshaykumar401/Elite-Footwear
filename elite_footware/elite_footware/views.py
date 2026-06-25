@@ -17,7 +17,8 @@ def get_product_dict(product):
     'id': product.id,
     'category': product.category,
     'gender': product.gender,
-    'is_new': product.is_new
+    'is_new': product.is_new,
+    'available': product.product_available
   }
 
 def home(request):

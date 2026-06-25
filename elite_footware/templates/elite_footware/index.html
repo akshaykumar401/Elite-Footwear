@@ -41,9 +41,11 @@
   <h2 id="product-title" class="sr-only">New arrival products</h2>
   <div class="product-grid">
     {% for product in all_products %}
-      <a href="{% url 'product_detail' product.id %}" gender="{{ product.gender }}" category="{{ product.category }}" class="product-card">
+      <a href="{% url 'product_detail' product.id %}" gender="{{ product.gender }}" category="{{ product.category }}" class="product-card {% if not product.available %}out-of-stock{% endif %}">
         <div class="product-image">
-          {% if product.is_new %}
+          {% if not product.available %}
+            <span class="product-badge out-of-stock">Out of Stock</span>
+          {% elif product.is_new %}
             <span class="product-badge">New</span>
           {% endif %}
           <img
