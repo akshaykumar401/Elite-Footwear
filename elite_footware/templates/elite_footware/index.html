@@ -2,7 +2,7 @@
 {% load static %} 
 {% block title %} Home {% endblock title %} 
 {% block styles %}
-  <link rel="stylesheet" href="{% static 'styles/index.css' %}" />
+  <link rel="stylesheet" href="{% static 'styles/index.css' %}?v=1.0" />
 {% endblock styles %} 
 {% block content %}
 <section id="new-arrives" aria-labelledby="new-arrivals-title">
@@ -24,122 +24,45 @@
   <div class="product-toolbar">
     <div class="product-filters" aria-label="Product filters">
       <span>Filter</span>
-      <button type="button" class="active">All</button>
-      <button type="button">Running</button>
-      <button type="button">Lifestyle</button>
-      <button type="button">Studio</button>
+      <button type="button" class="filter-btn active" data-value="All">All</button>
+      <button type="button" class="filter-btn" data-value="Running">Running</button>
+      <button type="button" class="filter-btn" data-value="Casual">Casual</button>
+      <button type="button" class="filter-btn" data-value="Formal">Formal</button>
+      <button type="button" class="filter-btn" data-value="Sports">Sports</button>
+      <button type="button" class="filter-btn" data-value="Boots">Boots</button>
+      <button type="button" class="filter-btn" data-value="Sandals">Sandals</button>
+      <button type="button" class="filter-btn" data-value="Slippers">Slippers</button>
     </div>
     <div class="product-count">
-      <span>12 Products Found</span>
+      <span id="product-count-text"></span>
     </div>
   </div>
 
   <h2 id="product-title" class="sr-only">New arrival products</h2>
   <div class="product-grid">
-    <a href="{% url 'product_detail' 1 %}" class="product-card">
-      <div class="product-image">
-        <span class="product-badge">New</span>
-        <img
-          src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80"
-          alt="White running shoe side view"
-        />
-      </div>
-      <div class="product-info">
-        <div>
-          <h3>Kinetic V2</h3>
-          <p>Performance Running</p>
+    {% for product in all_products %}
+      <a href="{% url 'product_detail' product.id %}" gender="{{ product.gender }}" category="{{ product.category }}" class="product-card">
+        <div class="product-image">
+          {% if product.is_new %}
+            <span class="product-badge">New</span>
+          {% endif %}
+          <img
+            src="{{ product.image.url }}"
+            alt="{{ product.image }}"
+          />
         </div>
-        <strong>$280.00</strong>
-      </div>
-    </a>
-
-    <a href="{% url 'product_detail' 2 %}" class="product-card">
-      <div class="product-image">
-        <img
-          src="https://images.unsplash.com/photo-1543508282-6319a3e2621f?auto=format&fit=crop&w=700&q=80"
-          alt="Black low profile sneaker"
-        />
-      </div>
-      <div class="product-info">
-        <div>
-          <h3>Architect Low</h3>
-          <p>Urban Lifestyle</p>
+        <div class="product-info">
+          <div>
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.category }}</p>
+          </div>
+          <strong>{{ product.price }}</strong>
         </div>
-        <strong>$240.00</strong>
-      </div>
-    </a>
-
-    <a href="{% url 'product_detail' 3 %}" class="product-card">
-      <div class="product-image product-image-dark">
-        <span class="product-badge">New</span>
-        <img
-          src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=700&q=80"
-          alt="Black athletic shoe on dark background"
-        />
-      </div>
-      <div class="product-info">
-        <div>
-          <h3>Void Elite</h3>
-          <p>Elite Track</p>
-        </div>
-        <strong>$320.00</strong>
-      </div>
-    </a>
-
-    <a href="{% url 'product_detail' 4 %}" class="product-card">
-      <div class="product-image product-image-dark">
-        <img
-          src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=700&q=80"
-          alt="Trail shoe with warm detail"
-        />
-      </div>
-      <div class="product-info">
-        <div>
-          <h3>Struct Scape</h3>
-          <p>Trail & Terrain</p>
-        </div>
-        <strong>$265.00</strong>
-      </div>
-    </a>
-
-    <a href="{% url 'product_detail' 5 %}" class="product-card">
-      <div class="product-image product-image-dark">
-        <span class="product-badge">Limited</span>
-        <img
-          src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=700&q=80"
-          alt="White sneaker on dark background"
-        />
-      </div>
-      <div class="product-info">
-        <div>
-          <h3>Carbon Zero</h3>
-          <p>Archive Concept</p>
-        </div>
-        <strong>$450.00</strong>
-      </div>
-    </a>
-
-    <a href="{% url 'product_detail' 6 %}" class="product-card">
-      <div class="product-image">
-        <img
-          src="https://images.unsplash.com/photo-1603808033192-082d6919d3e1?auto=format&fit=crop&w=700&q=80"
-          alt="Orange training shoe"
-        />
-      </div>
-      <div class="product-info">
-        <div>
-          <h3>Orange Element</h3>
-          <p>Training</p>
-        </div>
-        <strong>$190.00</strong>
-      </div>
-    </a>
-  </div>
-
-  <div class="product-load">
-    <button type="button">Load More Arrivals</button>
-    <span>Showing 6 of 12 products</span>
+      </a>
+    {% endfor %}    
   </div>
 </section>
 {% endblock content %}
-{% block scripts %}{% endblock scripts %}
+{% block scripts %}
+  <script src="{% static 'scripts/index.js' %}"></script>
+{% endblock scripts %}

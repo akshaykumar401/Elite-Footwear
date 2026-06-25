@@ -162,7 +162,7 @@ RECOMMENDED_PRODUCTS = DatabaseRecommendedProductsList()
 
 def product_page(request):
     all_products = []
-    for p in Product.objects.all().order_by('id'):
+    for p in Product.objects.all().order_by('-id'):
         p_dict = get_product_dict(p.id)
         if p_dict:
             all_products.append(p_dict)
