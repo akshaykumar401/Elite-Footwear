@@ -36,3 +36,33 @@ class Address(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Address"
+
+# Order Model
+class Order(models.Model):
+    # Status choices
+    STATUS_CHOICES = [
+        ('PENDING', 'Pending'),
+        ('SHIPPED', 'Shipped'),
+        ('DELIVERED', 'Delivered'),
+        ('CANCELLED', 'Cancelled'),
+    ]
+
+    # Payment Status
+    PAYMENT_STATUS_CHOICES = [
+        ('PENDING', 'Pending'),
+        ('PAID', 'Paid'),
+        ('FAILED', 'Failed'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='orders')
+    quantity = models.PositiveIntegerField(default=1)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(max_length=100, choices=STATUS_CHOICES, default='Pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    payment_status = models.CharField(max_length=100, choices=PAYMENT_STATUS_CHOICES, default='Pending')
+
+    def __str__(self):
+        return f"{self.user.username}'s Order"

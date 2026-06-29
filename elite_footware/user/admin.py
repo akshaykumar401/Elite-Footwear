@@ -1,7 +1,7 @@
 # pyrefly: ignore [missing-import]
 from django.contrib import admin
 # pyrefly: ignore [missing-import]
-from .models import UserProfile, Wishlist, Address
+from .models import UserProfile, Wishlist, Address, Order
 
 # Customize Admin Portal Branding
 admin.site.site_header = "ELITE FOOTWEAR Admin Portal"
@@ -28,3 +28,10 @@ class AddressAdmin(admin.ModelAdmin):
   list_filter = ('is_default', 'state', 'city')
   search_fields = ('user__username', 'name', 'line1', 'city', 'phone')
   ordering = ('user__username', '-is_default')
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+  list_display = ('user', 'product', 'quantity', 'price', 'total', 'status', 'payment_status')
+  list_filter = ('status', 'payment_status')
+  search_fields = ('user__username', 'product__product_name')
+  ordering = ('user__username', '-created_at')
