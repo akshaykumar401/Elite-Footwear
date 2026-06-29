@@ -1,13 +1,110 @@
 {% extends "layout/layout.html" %}
-{% block title %}
-  Login
-{% endblock title %}
+{% load static %}
+
+{% block title %} Welcome Back - Login {% endblock title %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/register.css' %}?v=1.0" />
+{% endblock styles %}
+
 {% block content %}
-  <h2>Login Form</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-success" type="submit">Login</button>
-  </form>
-  <p>Don't Have an Account? <a href="{% url 'register' %}">Register</a></p>
+<div class="auth-page-container">
+  <div class="auth-card">
+    <!-- Left Panel: Brand Promo -->
+    <div class="auth-hero-panel">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="brand-tag">ELITE FOOTWEAR</div>
+        <h2>WELCOME<br>BACK.</h2>
+        <p>Sign in to access your orders, active wishlist, rewards, and personalized sizing.</p>
+        <div class="hero-benefits">
+          <div class="benefit-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>Track Orders & History</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>Manage Saved Wishlist</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel: Form -->
+    <div class="auth-form-panel">
+      <div class="form-header">
+        <h1>Sign In</h1>
+        <p>Access your Elite Footwear account.</p>
+      </div>
+
+      <form method="post" novalidate class="auth-form">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+          <div class="form-errors-global">
+            {% for error in form.non_field_errors %}
+              <div class="error-alert">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span>{{ error }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="form-fields">
+          {% for field in form %}
+            <div class="form-group {% if field.errors %}has-errors{% endif %}">
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              <div class="input-wrapper">
+                {{ field }}
+                {% if "password" in field.name %}
+                  <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                    <i class="fa-regular fa-eye"></i>
+                  </button>
+                {% endif %}
+              </div>
+              {% for error in field.errors %}
+                <span class="field-error-message">
+                  <i class="fa-solid fa-circle-exclamation"></i> {{ error }}
+                </span>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <span>Sign In</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </form>
+
+      <div class="form-footer">
+        <p>Don't have an account? <a href="{% url 'register' %}">Create One</a></p>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggles = document.querySelectorAll('.password-toggle');
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', function() {
+        const input = this.previousElementSibling;
+        const icon = this.querySelector('i');
+        if (input.type === 'password') {
+          input.type = 'text';
+          icon.classList.remove('fa-eye');
+          icon.classList.add('fa-eye-slash');
+        } else {
+          input.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+        }
+      });
+    });
+  });
+</script>
+{% endblock scripts %}

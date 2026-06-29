@@ -1,15 +1,113 @@
 {% extends "layout/layout.html" %}
+{% load static %}
 
-{% block title %}
-  Register
-{% endblock title %}
+{% block title %} Join Elite Footwear - Register {% endblock title %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/register.css' %}?v=1.0" />
+{% endblock styles %}
 
 {% block content %}
-  <h2>Register User</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-success" type="submit">Register</button>
-  </form>
-  <p>Already Have an Account? <a href="{% url 'login' %}">Login</a></p>
+<div class="auth-page-container">
+  <div class="auth-card">
+    <!-- Left Panel: Brand Promo -->
+    <div class="auth-hero-panel">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="brand-tag">ELITE FOOTWEAR</div>
+        <h2>ELEVATE<br>YOUR STEP.</h2>
+        <p>Join the circle. Get exclusive drops, personalized recommendations, and member-only rewards.</p>
+        <div class="hero-benefits">
+          <div class="benefit-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>Early Access to Drops</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>Member Rewards & Points</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel: Form -->
+    <div class="auth-form-panel">
+      <div class="form-header">
+        <h1>Create Account</h1>
+        <p>Start your journey with us today.</p>
+      </div>
+
+      <form method="post" novalidate class="auth-form">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+          <div class="form-errors-global">
+            {% for error in form.non_field_errors %}
+              <div class="error-alert">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span>{{ error }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="form-fields">
+          {% for field in form %}
+            <div class="form-group {% if field.errors %}has-errors{% endif %}">
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              <div class="input-wrapper">
+                {{ field }}
+                {% if "password" in field.name %}
+                  <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                    <i class="fa-regular fa-eye"></i>
+                  </button>
+                {% endif %}
+              </div>
+              {% if field.help_text %}
+                <span class="field-help">{{ field.help_text|safe }}</span>
+              {% endif %}
+              {% for error in field.errors %}
+                <span class="field-error-message">
+                  <i class="fa-solid fa-circle-exclamation"></i> {{ error }}
+                </span>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <span>Create Account</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </form>
+
+      <div class="form-footer">
+        <p>Already have an account? <a href="{% url 'login' %}">Sign In</a></p>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggles = document.querySelectorAll('.password-toggle');
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', function() {
+        const input = this.previousElementSibling;
+        const icon = this.querySelector('i');
+        if (input.type === 'password') {
+          input.type = 'text';
+          icon.classList.remove('fa-eye');
+          icon.classList.add('fa-eye-slash');
+        } else {
+          input.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+        }
+      });
+    });
+  });
+</script>
+{% endblock scripts %}

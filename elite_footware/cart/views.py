@@ -1,9 +1,16 @@
 import json
+# pyrefly: ignore [missing-import]
 from django.shortcuts import render
+# pyrefly: ignore [missing-import]
 from django.http import JsonResponse
+# pyrefly: ignore [missing-import]
 from django.views.decorators.http import require_POST
 from product.views import PRODUCTS, RECOMMENDED_PRODUCTS
+# pyrefly: ignore [missing-import]
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def cart_page(request):
     cart = request.session.get('cart', {})
     cart_items = []

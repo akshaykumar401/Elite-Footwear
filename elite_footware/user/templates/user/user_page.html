@@ -11,7 +11,7 @@
     <header class="profile-hero-banner" aria-label="Profile Header">
       <div class="profile-hero-content">
         <div class="avatar-circle">
-          <span>AC</span>
+          <span>{{ user.first_name|slice:":1"|upper }}{{ user.last_name|slice:":1"|upper }}</span>
         </div>
         <div class="profile-meta">
           <span class="loyalty-tier-badge">{{ profile.tier }}</span>
