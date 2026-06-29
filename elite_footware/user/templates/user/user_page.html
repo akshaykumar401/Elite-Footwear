@@ -330,7 +330,7 @@
             <div class="address-card">
               <div class="address-card-header">
                 <h3>{{ addr.label }}</h3>
-                {% if forloop.first %}
+                {% if addr.is_default %}
                 <span class="default-badge">Default</span>
                 {% endif %}
               </div>

@@ -7,13 +7,41 @@ from django.contrib.auth import login
 # pyrefly: ignore [missing-import]
 from django.contrib.auth.decorators import login_required
 # pyrefly: ignore [missing-import]
-from .models import UserProfile
+from .models import UserProfile, Wishlist, Address
+from product.models import Product
+from product.views import get_product_dict
 
 
 # Create your views here.
 def user_page_data(request):
     user = request.user
     profile_obj, created = UserProfile.objects.get_or_create(user=user)
+    
+    # Wishlist items List
+    wishlist_items = []
+    for item in Wishlist.objects.filter(user=user):
+        p_dict = get_product_dict(item.product.id)
+        if p_dict:
+            wishlist_items.append({
+                'id': p_dict['id'],
+                'name': p_dict['name'],
+                'price': p_dict['price'],
+                'image': p_dict['main_image']
+            })
+    
+    # Address list
+    addresses = Address.objects.filter(user=user)
+    address_list = []
+    for address in addresses:
+        address_list.append({
+            'label': f'{address.label} Address',
+            'name': address.name,
+            'line1': address.line1,
+            'city_state_zip': f'{address.city}, {address.state} {address.zip_code}',
+            'phone': address.phone,
+            'is_default': address.is_default,
+        })
+
     return {
     'profile': {
         'name': f"{user.first_name} {user.last_name}",
@@ -24,7 +52,7 @@ def user_page_data(request):
         'preferred_size': str(profile_obj.prefered_size) if profile_obj.prefered_size else "Not specified",
         'stats': {
             'total_orders': 8,
-            'wishlist_count': 3,
+            'wishlist_count': len(wishlist_items),
             'rewards': 850
         }
     },
@@ -75,43 +103,9 @@ def user_page_data(request):
             ]
         }
     ],
-    'wishlist': [
-        {
-            'id': 2,
-            'name': 'ARCHITECT V.1 PERFORMANCE',
-            'price': '$260.00',
-            'image': '/static/images/products/orange-element.png'
-        },
-        {
-            'id': 3,
-            'name': 'APEX TRAIL RUNNER',
-            'price': '$220.00',
-            'image': '/static/images/products/void-elite.png'
-        },
-        {
-            'id': 1,
-            'name': 'COURT CLASSIC LUX',
-            'price': '$180.00',
-            'image': '/static/images/products/kinetic-v2.png'
-        }
-    ],
-    'addresses': [
-        {
-            'label': 'Primary Shipping',
-            'name': 'Alex Carter',
-            'line1': '1428 Architecture Way, Suite 400',
-            'city_state_zip': 'San Francisco, CA 94103',
-            'phone': '+1 (555) 019-2834'
-            },
-        {
-            'label': 'Office Address',
-            'name': 'Alex Carter',
-            'line1': '100 Tech Plaza, Floor 12',
-            'city_state_zip': 'San Francisco, CA 94105',
-            'phone': '+1 (555) 019-9988'
-        }
-    ],
-    }
+    'wishlist': wishlist_items,
+    'addresses': address_list,
+}
 
 @login_required
 def user_page(request):
