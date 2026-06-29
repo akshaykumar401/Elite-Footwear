@@ -1,6 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import UserRegistrationForm
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def user_page(request):
     user_context = {
         'profile': {
@@ -101,3 +105,21 @@ def user_page(request):
         ],
     }
     return render(request, 'user/user_page.html', user_context)
+
+# Register Functionality
+def register(request):
+  if request.method == 'POST':
+    form = UserRegistrationForm(request.POST)
+    if form.is_valid():
+      user = form.save(commit=False)
+      user.set_password(form.cleaned_data['password1'])
+      user.save()
+      # Login the user
+      login(request, user)
+      return redirect('product_page')
+  else:
+    form = UserRegistrationForm()
+
+  return render(request, 'registration/register.html', {
+    'form': form,
+  })

@@ -1,15 +1,12 @@
-{% extends "layout/layout.html" %} 
-{% load static %} 
-{% block title %} Account Dashboard | SOLE ARCHITECT {% endblock title %} 
-
+{% extends "layout/layout.html" %}
+{% load static %}
+{% block title %} Account Dashboard {% endblock title %} 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'styles/user_page.css' %}" />
+<link rel="stylesheet" href="{% static 'styles/user_page.css' %}?v=1.5" />
 {% endblock styles %} 
-
 {% block content %}
 <div class="user-dashboard-page">
   <div class="dashboard-container">
-    
     <!-- Profile Hero Banner -->
     <header class="profile-hero-banner" aria-label="Profile Header">
       <div class="profile-hero-content">
@@ -22,7 +19,7 @@
           <p class="member-since">Member Since {{ profile.member_since }}</p>
         </div>
       </div>
-      
+
       <!-- Stats Container -->
       <div class="profile-stats-grid">
         <div class="stat-card">
@@ -30,7 +27,9 @@
           <div class="stat-label">Total Orders</div>
         </div>
         <div class="stat-card">
-          <div class="stat-value" id="stats-wishlist-count">{{ wishlist|length }}</div>
+          <div class="stat-value" id="stats-wishlist-count">
+            {{ wishlist|length }}
+          </div>
           <div class="stat-label">Wishlist Items</div>
         </div>
         <div class="stat-card">
@@ -42,63 +41,122 @@
 
     <!-- Main Dashboard Layout -->
     <div class="dashboard-body-grid">
-      
       <!-- Left Column: Navigation Sidebar -->
       <aside class="dashboard-sidebar" aria-label="Dashboard navigation">
         <nav class="sidebar-nav">
-          <button class="sidebar-tab-btn active" data-target="profile-panel" type="button">
+          <button
+            class="sidebar-tab-btn active"
+            data-target="profile-panel"
+            type="button"
+          >
             <i class="fa-regular fa-user"></i>
             <span>Profile Details</span>
           </button>
-          <button class="sidebar-tab-btn" data-target="orders-panel" type="button">
+          <button
+            class="sidebar-tab-btn"
+            data-target="orders-panel"
+            type="button"
+          >
             <i class="fa-solid fa-clock-rotate-left"></i>
             <span>Order History</span>
           </button>
-          <button class="sidebar-tab-btn" data-target="wishlist-panel" type="button">
+          <button
+            class="sidebar-tab-btn"
+            data-target="wishlist-panel"
+            type="button"
+          >
             <i class="fa-regular fa-heart"></i>
             <span>Saved Wishlist</span>
           </button>
-          <button class="sidebar-tab-btn" data-target="payments-panel" type="button">
+          <button
+            class="sidebar-tab-btn"
+            data-target="payments-panel"
+            type="button"
+          >
             <i class="fa-regular fa-credit-card"></i>
             <span>Address to Delivery</span>
+          </button>
+          <button class="sidebar-tab-btn" id="btn-logout" type="button">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
           </button>
         </nav>
       </aside>
 
       <!-- Right Column: Content Panels -->
       <main class="dashboard-content-area" aria-live="polite">
-        
         <!-- PANEL: Profile Details -->
-        <section class="content-panel active" id="profile-panel" aria-label="Profile Details">
+        <section
+          class="content-panel active"
+          id="profile-panel"
+          aria-label="Profile Details"
+        >
           <div class="panel-header">
             <h2>Account Details</h2>
-            <button class="btn-secondary" id="edit-profile-toggle" type="button">Edit Profile</button>
+            <button
+              class="btn-secondary"
+              id="edit-profile-toggle"
+              type="button"
+            >
+              Edit Profile
+            </button>
           </div>
-          
-          <form class="profile-form" id="profile-details-form" action="#" method="post">
+
+          <form
+            class="profile-form"
+            id="profile-details-form"
+            action="#"
+            method="post"
+          >
             {% csrf_token %}
             <div class="form-grid">
               <div class="form-group">
                 <label for="profile-name">Full Name</label>
-                <input type="text" id="profile-name" name="name" value="{{ profile.name }}" readonly />
+                <input
+                  type="text"
+                  id="profile-name"
+                  name="name"
+                  value="{{ profile.name }}"
+                  readonly
+                />
               </div>
               <div class="form-group">
                 <label for="profile-email">Email Address</label>
-                <input type="email" id="profile-email" name="email" value="{{ profile.email }}" readonly />
+                <input
+                  type="email"
+                  id="profile-email"
+                  name="email"
+                  value="{{ profile.email }}"
+                  readonly
+                />
               </div>
               <div class="form-group">
                 <label for="profile-phone">Phone Number</label>
-                <input type="tel" id="profile-phone" name="phone" value="{{ profile.phone }}" readonly />
+                <input
+                  type="tel"
+                  id="profile-phone"
+                  name="phone"
+                  value="{{ profile.phone }}"
+                  readonly
+                />
               </div>
               <div class="form-group">
                 <label for="profile-size">Preferred Shoe Size (US)</label>
-                <input type="text" id="profile-size" name="size" value="{{ profile.preferred_size }}" readonly />
+                <input
+                  type="text"
+                  id="profile-size"
+                  name="size"
+                  value="{{ profile.preferred_size }}"
+                  readonly
+                />
               </div>
             </div>
-            
+
             <div class="form-actions" id="form-edit-actions">
               <button class="btn-primary" type="submit">Save Changes</button>
-              <button class="btn-link" id="edit-profile-cancel" type="button">Cancel</button>
+              <button class="btn-link" id="edit-profile-cancel" type="button">
+                Cancel
+              </button>
             </div>
           </form>
 
@@ -112,145 +170,201 @@
             <div class="form-grid">
               <div class="form-group">
                 <label for="current-pass">Current Password</label>
-                <input type="password" id="current-pass" placeholder="••••••••" disabled />
+                <input
+                  type="password"
+                  id="current-pass"
+                  placeholder="••••••••"
+                  disabled
+                />
               </div>
               <div class="form-group">
                 <label for="new-pass">New Password</label>
-                <input type="password" id="new-pass" placeholder="Enter new password" disabled />
+                <input
+                  type="password"
+                  id="new-pass"
+                  placeholder="Enter new password"
+                  disabled
+                />
               </div>
             </div>
-            <button class="btn-secondary btn-security-change" type="button" disabled>Change Password</button>
+            <button
+              class="btn-secondary btn-security-change"
+              type="button"
+              disabled
+            >
+              Change Password
+            </button>
           </form>
         </section>
 
         <!-- PANEL: Order History -->
-        <section class="content-panel" id="orders-panel" aria-label="Order History">
+        <section
+          class="content-panel"
+          id="orders-panel"
+          aria-label="Order History"
+        >
           <div class="panel-header">
             <h2>Order History</h2>
           </div>
-          
+
           <div class="orders-list">
             {% for order in orders %}
-              <div class="order-card">
-                <div class="order-card-header">
-                  <div class="order-meta-info">
-                    <span class="order-id">Order {{ order.id }}</span>
-                    <span class="order-date">Placed on {{ order.date }}</span>
-                  </div>
-                  <div class="order-status-badge {{ order.status_class }}">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <span>{{ order.status }}</span>
-                  </div>
+            <div class="order-card">
+              <div class="order-card-header">
+                <div class="order-meta-info">
+                  <span class="order-id">Order {{ order.id }}</span>
+                  <span class="order-date">Placed on {{ order.date }}</span>
                 </div>
-                
-                <div class="order-card-body">
-                  {% for item in order.items %}
-                    <div class="ordered-item-row">
-                      <div class="item-img-box">
-                        <img src="{{ item.image }}" alt="{{ item.name }}" />
-                      </div>
-                      <div class="item-details">
-                        <h3>{{ item.name }}</h3>
-                        <p class="item-spec">Color: {{ item.color }} | Size: {{ item.size }}</p>
-                      </div>
-                    </div>
-                  {% endfor %}
-                </div>
-                
-                <div class="order-card-footer">
-                  <div class="order-price-summary">
-                    <span class="label">Total Paid</span>
-                    <span class="value">{{ order.total }}</span>
-                  </div>
-                  <div class="order-footer-actions">
-                    <button class="btn-secondary btn-sm" type="button">Track Package</button>
-                    <button class="btn-link btn-sm" type="button">View Receipt</button>
-                  </div>
+                <div class="order-status-badge {{ order.status_class }}">
+                  <i class="fa-solid fa-circle-check"></i>
+                  <span>{{ order.status }}</span>
                 </div>
               </div>
+
+              <div class="order-card-body">
+                {% for item in order.items %}
+                <div class="ordered-item-row">
+                  <div class="item-img-box">
+                    <img src="{{ item.image }}" alt="{{ item.name }}" />
+                  </div>
+                  <div class="item-details">
+                    <h3>{{ item.name }}</h3>
+                    <p class="item-spec">
+                      Color: {{ item.color }} | Size: {{ item.size }}
+                    </p>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+
+              <div class="order-card-footer">
+                <div class="order-price-summary">
+                  <span class="label">Total Paid</span>
+                  <span class="value">{{ order.total }}</span>
+                </div>
+                <div class="order-footer-actions">
+                  <button class="btn-secondary btn-sm" type="button">
+                    Track Package
+                  </button>
+                  <button class="btn-link btn-sm" type="button">
+                    View Receipt
+                  </button>
+                </div>
+              </div>
+            </div>
             {% empty %}
-              <div class="empty-state">
-                <i class="fa-solid fa-box-open"></i>
-                <p>You haven't placed any orders yet.</p>
-                <a href="{% url 'product_page' %}" class="btn-primary">Shop Performance</a>
-              </div>
+            <div class="empty-state">
+              <i class="fa-solid fa-box-open"></i>
+              <p>You haven't placed any orders yet.</p>
+              <a href="{% url 'product_page' %}" class="btn-primary"
+                >Shop Performance</a
+              >
+            </div>
             {% endfor %}
           </div>
         </section>
 
         <!-- PANEL: Saved Wishlist -->
-        <section class="content-panel" id="wishlist-panel" aria-label="Saved Wishlist">
+        <section
+          class="content-panel"
+          id="wishlist-panel"
+          aria-label="Saved Wishlist"
+        >
           <div class="panel-header">
             <h2>Saved Wishlist</h2>
           </div>
-          
+
           <div class="wishlist-grid" id="wishlist-items-grid">
             {% for item in wishlist %}
-              <div class="wishlist-card" data-item-id="{{ item.id }}">
-                <button class="btn-remove-wishlist" type="button" aria-label="Remove from wishlist">
-                  <i class="fa-solid fa-xmark"></i>
-                </button>
-                <a href="{% url 'product_detail' item.id %}" class="wishlist-card-link">
-                  <div class="wishlist-img-box">
-                    <img src="{{ item.image }}" alt="{{ item.name }}" />
-                  </div>
-                  <div class="wishlist-meta">
-                    <h3>{{ item.name }}</h3>
-                    <span class="wishlist-price">{{ item.price }}</span>
-                  </div>
-                </a>
-                <div class="wishlist-card-actions">
-                  <button class="btn-primary btn-add-bag" type="button">Add to Cart</button>
+            <div class="wishlist-card" data-item-id="{{ item.id }}">
+              <button
+                class="btn-remove-wishlist"
+                type="button"
+                aria-label="Remove from wishlist"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+              <a
+                href="{% url 'product_detail' item.id %}"
+                class="wishlist-card-link"
+              >
+                <div class="wishlist-img-box">
+                  <img src="{{ item.image }}" alt="{{ item.name }}" />
                 </div>
+                <div class="wishlist-meta">
+                  <h3>{{ item.name }}</h3>
+                  <span class="wishlist-price">{{ item.price }}</span>
+                </div>
+              </a>
+              <div class="wishlist-card-actions">
+                <button class="btn-primary btn-add-bag" type="button">
+                  Add to Cart
+                </button>
               </div>
+            </div>
             {% empty %}
-              <div class="empty-state" id="wishlist-empty-state">
-                <i class="fa-regular fa-heart"></i>
-                <p>Your wishlist is currently empty.</p>
-                <a href="{% url 'product_page' %}" class="btn-primary">Browse Collection</a>
-              </div>
+            <div class="empty-state" id="wishlist-empty-state">
+              <i class="fa-regular fa-heart"></i>
+              <p>Your wishlist is currently empty.</p>
+              <a href="{% url 'product_page' %}" class="btn-primary"
+                >Browse Collection</a
+              >
+            </div>
             {% endfor %}
           </div>
         </section>
 
         <!-- PANEL: Address & Payments -->
-        <section class="content-panel" id="payments-panel" aria-label="Address and Payments">
+        <section
+          class="content-panel"
+          id="payments-panel"
+          aria-label="Address and Payments"
+        >
           <div class="panel-header">
             <h2>Saved Addresses</h2>
             <button class="btn-secondary" type="button">Add Address</button>
           </div>
-          
+
           <div class="address-grid">
             {% for addr in addresses %}
-              <div class="address-card">
-                <div class="address-card-header">
-                  <h3>{{ addr.label }}</h3>
-                  {% if forloop.first %}
-                    <span class="default-badge">Default</span>
-                  {% endif %}
-                </div>
-                <div class="address-card-body">
-                  <p class="name">{{ addr.name }}</p>
-                  <p class="line">{{ addr.line1 }}</p>
-                  <p class="line">{{ addr.city_state_zip }}</p>
-                  <p class="phone">Phone: {{ addr.phone }}</p>
-                </div>
-                <div class="address-card-footer">
-                  <button class="btn-link btn-sm" type="button">Edit</button>
-                  <button class="btn-link btn-sm btn-delete-address" type="button">Delete</button>
-                </div>
+            <div class="address-card">
+              <div class="address-card-header">
+                <h3>{{ addr.label }}</h3>
+                {% if forloop.first %}
+                <span class="default-badge">Default</span>
+                {% endif %}
               </div>
+              <div class="address-card-body">
+                <p class="name">{{ addr.name }}</p>
+                <p class="line">{{ addr.line1 }}</p>
+                <p class="line">{{ addr.city_state_zip }}</p>
+                <p class="phone">Phone: {{ addr.phone }}</p>
+              </div>
+              <div class="address-card-footer">
+                <button class="btn-link btn-sm" type="button">Edit</button>
+                <button
+                  class="btn-link btn-sm btn-delete-address"
+                  type="button"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
             {% endfor %}
           </div>
         </section>
-
       </main>
-      
     </div>
+    <form
+      style="display: none"
+      id="logout-form"
+      method="POST"
+      action="{% url 'logout' %}"
+    >
+      {% csrf_token %}
+    </form>
   </div>
+  {% endblock content %} {% block scripts %}
+  <script src="{% static 'scripts/user_page.js' %}?v=1.2"></script>
+  {% endblock scripts %}
 </div>
-{% endblock content %}
-
-{% block scripts %}
-<script src="{% static 'scripts/user_page.js' %}"></script>
-{% endblock scripts %}
