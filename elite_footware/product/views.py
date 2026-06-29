@@ -66,10 +66,15 @@ def get_product_dict(product_id):
     
     # Main image mapping (fallback to first color's main image)
     main_image = ""
-    if product.product_image:
-        main_image = get_image_url(product.product_image)
+    main_img_obj = product.images.filter(is_main=True).first()
+    if main_img_obj:
+        main_image = get_image_url(main_img_obj.image)
     elif colors_list:
         main_image = colors_list[0]['image']
+    else:
+        first_img = product.images.first()
+        if first_img:
+            main_image = get_image_url(first_img.image)
         
     # Badge mapping
     badge = ""

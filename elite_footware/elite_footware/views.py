@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from product.models import Product
+from product.views import get_image_url
 
 
 # Create your views here.
@@ -7,10 +8,19 @@ def get_product_dict(product):
   """
   Returns a dictionary of product details.
   """
+  main_image = ""
+  main_img_obj = product.images.filter(is_main=True).first()
+  if main_img_obj:
+    main_image = get_image_url(main_img_obj.image)
+  else:
+    first_img = product.images.first()
+    if first_img:
+      main_image = get_image_url(first_img.image)
+
   return {
     'name': product.product_name,
     'price': f"${product.product_price}",
-    'image': product.product_image,
+    'image': main_image,
     'description': product.product_description,
     'secondary_title': product.secondary_title,
     'secondary_description': product.secondary_description,

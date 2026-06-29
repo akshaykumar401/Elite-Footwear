@@ -45,12 +45,12 @@
         <div class="product-image">
           {% if not product.available %}
             <span class="product-badge out-of-stock">Out of Stock</span>
-          {% elif product.is_new %}
+          {% elif product.product_created_at %}
             <span class="product-badge">New</span>
           {% endif %}
           <img
-            src="{{ product.image.url }}"
-            alt="{{ product.image }}"
+            src="{{ product.image }}"
+            alt="{{ product.name }} image"
           />
         </div>
         <div class="product-info">
